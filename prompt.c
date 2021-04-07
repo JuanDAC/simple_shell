@@ -1,4 +1,4 @@
-
+#include "shell.h"
 
 
 char *prompt(char *buffer, size_t *length_buffer)

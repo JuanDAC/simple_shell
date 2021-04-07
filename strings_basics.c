@@ -1,4 +1,4 @@
-
+#include "shell.h"
 /**
 * length_string - get length to strings
 * @string: string to get length
@@ -17,7 +17,7 @@ int length_string(char *string)
 	return (1 + length_string(string + 1));
 }
 
-bool inclides_string(
+bool includes_string(
 	char *string,
 	char *search_string,
 	const bool variadic, ...)
@@ -40,7 +40,7 @@ bool inclides_string(
 		return (false);
 
 	va_end(argumets);
-	return (inclides_string(string + 1, search_string + 1, false));
+	return (includes_string(string + 1, search_string + 1, false));
 }
 
 char *string_token_index(
