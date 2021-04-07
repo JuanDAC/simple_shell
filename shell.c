@@ -12,7 +12,7 @@
  */
 int main(ARGS_UNUSED, char **env __attribute__((unused)))
 {
-	char **tokens;
+	char *tokens[BUFFER_SIZE];
 	char current_line[BUFFER_SIZE];
 	size_t length_current_line = BUFFER_SIZE;
 
@@ -21,8 +21,8 @@ int main(ARGS_UNUSED, char **env __attribute__((unused)))
 	do {
 		/* (void) -> prompt() -> string */
 		prompt(current_line, &length_current_line);
-		/* (string) -> parser() -> tokens[] */
-		tokens = parser(current_line);
+		/* (string) -> parser() -> tokens[] */  
+		parser(current_line, (char **)&tokens);
 		(void)tokens;
 		/*write(1, *tokens, length_string(*tokens));*/
 		/* (tokens[]) -> (evn) -> executor() -> "status" */
