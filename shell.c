@@ -22,7 +22,7 @@ int main(ARGS_UNUSED, char **env __attribute__((unused)))
 		/* (void) -> prompt() -> string */
 		prompt(current_line, &length_current_line);
 		/* (string) -> parser() -> tokens[] */  
-		parser(current_line, (char **)&tokens);
+		parser(current_line, (char **)tokens);
 		(void)tokens;
 		/*write(1, *tokens, length_string(*tokens));*/
 		/* (tokens[]) -> (evn) -> executor() -> "status" */

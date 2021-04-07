@@ -1,12 +1,12 @@
 #include "shell.h"
 
 
-void parser(char *string, char **tokens)
+void parser(char *line, char **tokens)
 {
 	int i;
 	char *current_token = NULL;
 
-	current_token = strtok(string, " ");
+	current_token = strtok(line, " ");
 
 	i = 0;
 	while (current_token != NULL)
