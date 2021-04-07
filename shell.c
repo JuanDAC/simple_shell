@@ -10,12 +10,11 @@
  * @env: argc and argv
  * Return: o if success
  */
-int main(ARGS_UNUSED, char **env)
+int main(ARGS_UNUSED, char **env __attribute__((unused)))
 {
-	void **tokens;
-	char current_line[BUFFER_SIZE], path[BUFFER_SIZE];
+	char **tokens;
+	char current_line[BUFFER_SIZE];
 	size_t length_current_line = BUFFER_SIZE;
-	char *current_path = path;
 
 	/*extract_path(env, &current_path);*/
 
@@ -23,9 +22,8 @@ int main(ARGS_UNUSED, char **env)
 		/* (void) -> prompt() -> string */
 		prompt(current_line, &length_current_line);
 		/* (string) -> parser() -> tokens[] */
-		/*tokens = parser(current_line);*/
+		tokens = parser(current_line);
 		(void)tokens;
-		(void)path;
 		/*write(1, *tokens, length_string(*tokens));*/
 		/* (tokens[]) -> (evn) -> executor() -> "status" */
 	} while (1);
