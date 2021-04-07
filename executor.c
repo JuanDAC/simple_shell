@@ -5,20 +5,20 @@ void buffer_concat(char **buffer, char *slash, char *command)
 	int i, j;
 
 	if (!buffer || !slash || !command)
-		return (NULL);
+		return;
 
 	i = length_string(*buffer);
 	/* remplzamos el nulo por el slash EJ "/bin/" */
 	(*buffer)[i] = *slash;
 	i++;
 	/* concatenamos el commando que nos llegue EJ "/bin/ls"*/
-	for (j = 0; command[j], j++, i++)
+	for (j = 0; command[j]; j++, i++)
 		(*buffer)[i] = command[j];
 	/*agregamos el nulo de caracter al final*/
 	(*buffer)[i] = '\0';
 }
 
-void which(char **tokens, char **env, char **command)
+void which(char **tokens, char **env, char *command)
 {
 	int i, j;
 	char *path_content;
@@ -31,9 +31,9 @@ void which(char **tokens, char **env, char **command)
 		{
 			j = 0;
 			do {
-				path_content = string_token_index(command, env[i], 5, ":", j);
-				buffer_concat(command, "/", tokens[0]);
-				if (access(*command, X_OK) == 0)
+				path_content = string_token_index(&command, env[i], 5, ":", j);
+				buffer_concat(&command, "/", tokens[0]);
+				if (access(command, X_OK) == 0)
 					return;
 				j += 1;
 			} while (path_content);
@@ -55,7 +55,7 @@ void executor(char **tokens, char **env)
 {
 	char command[BUFFER_SIZE];
 
-	/*which(tokens, env, (void **)&command);*/
+	which(tokens, env, command);
 
 }
 
