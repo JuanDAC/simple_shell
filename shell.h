@@ -33,6 +33,9 @@ bool includes_string(char *string, char *search_string, const bool variadic, ...
 char *string_token_index(char **string_to, char *string_from, int init_index, const char *separator, int index);
 void parser(char *line, char **tokens);
 
+void executor(char **, char **);
+
+
 #define SIGN ("$ ")
 #define BUFFER_SIZE (4096)
 

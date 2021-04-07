@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 #define ARGS_UNUSED int c __attribute__((unused)), \
 	char **v __attribute__((unused))
 
@@ -10,7 +9,7 @@
  * @env: argc and argv
  * Return: o if success
  */
-int main(ARGS_UNUSED, char **env __attribute__((unused)))
+int main(ARGS_UNUSED, char **env)
 {
 	char *tokens[BUFFER_SIZE];
 	char current_line[BUFFER_SIZE];
@@ -23,9 +22,9 @@ int main(ARGS_UNUSED, char **env __attribute__((unused)))
 		prompt(current_line, &length_current_line);
 		/* (string) -> parser() -> tokens[] */  
 		parser(current_line, (char **)tokens);
-		(void)tokens;
-		/*write(1, *tokens, length_string(*tokens));*/
 		/* (tokens[]) -> (evn) -> executor() -> "status" */
+		executor((char **)tokens, env);
+
 	} while (1);
 
 	return (0);

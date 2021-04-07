@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 void parser(char *line, char **tokens)
 {
 	int i;
