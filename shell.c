@@ -6,6 +6,8 @@
 void sigint_handler()
 {
 	signal(SIGINT, sigint_handler);
+	NEW_LINE;
+	PRINT_PRONPT;
 	fflush(stdout);
 }
 

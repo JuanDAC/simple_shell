@@ -42,6 +42,8 @@ void __attribute__((constructor)) add_signals(void);
 #define BUFFER_SIZE (4096)
 #define PERROR perror("Error")
 #define DEADED_CHILD (256)
+#define PRINT_PRONPT write(1, SIGN, 2)
+#define NEW_LINE write(1, "\n", 1)
 
 
 #endif /*SHELL_H*/
