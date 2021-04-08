@@ -18,6 +18,14 @@ void buffer_concat(char **buffer, char *slash, char *command)
 	(*buffer)[i] = '\0';
 }
 
+void fill_buffer_null(char *buffer)
+{
+	while (*buffer)
+		*buffer++ = '\0';
+}
+
+
+
 void which(char **tokens, char **env, char *command)
 {
 	int i, j;
@@ -38,24 +46,20 @@ void which(char **tokens, char **env, char *command)
 				j += 1;
 			} while (path_content);
 		}
-		/*
-		while (path_content)
-		{                                          command = "/bin" "/" "ls"
-			path_content = strtok(NULL, ":");
-			current_string = str_concat("/", args[0]); <<<< /ls
-			current_direction = str_concat(path_content, current_string); <<<< /bin/ls
-			if (access(current_direction, X_OK) == 0)
-				break;
-			*/
 	}
+	fill_buffer_null(command);
 }
 
 
 void executor(char **tokens, char **env)
 {
-	char command[BUFFER_SIZE];
+	char command[BUFFER_SIZE] = "";
 
+	if (!*tokens)
+		return;
 	which(tokens, env, command);
+	
+	printf("%s", command);
 
 }
 
