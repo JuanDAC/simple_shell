@@ -16,18 +16,22 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
+typedef unsigned char bool;
+#define true (1)
+#define false (!true)
+
 /**
  * enum Boolean - Boolean
  * @false: type data false
  * @true: type data false
  */
-typedef enum Boolean
-{
-	false,
-	true
-} bool;
+//typedef enum Boolean
+//{
+//	false,
+//	true
+//} bool;
 
-char *prompt(char *buffer, size_t *length_buffer);
+char *prompt(char *buffer, size_t *length_buffer, bool print_prompt);
 int length_string(char *string);
 bool includes_string(char *string, char *search_string, const bool variadic, ...);
 char *string_token_index(char **string_to, char *string_from, int init_index, const char *separator, int index);

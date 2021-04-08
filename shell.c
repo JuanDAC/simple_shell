@@ -34,12 +34,12 @@ int main(ARGS_UNUSED, char **env)
 	{	
 		do {
 			/* (void) -> prompt() -> string */
-			prompt(current_line, &length_current_line);
+			prompt(current_line, &length_current_line, true);
 			/* (string) -> parser() -> tokens[] */  
 			parser(current_line, (char **)tokens);
 			if (includes_string(tokens[0], "exit", false))
 			{
-					exit(98);
+				exit(98);
 			}	
 			/* (tokens[]) -> (evn) -> executor() -> "status" */
 			executor((char **)tokens, env);
@@ -47,7 +47,7 @@ int main(ARGS_UNUSED, char **env)
 	}	
 	else
 	{
-		prompt(current_line, &length_current_line);
+		prompt(current_line, &length_current_line, false);
 		parser(current_line, (char **)tokens);
 		executor((char **)tokens, env);
 	}

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+while ($TRUE) do
+	echo "dead to shel"
+done
+
