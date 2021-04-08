@@ -59,8 +59,10 @@ void executor(char **tokens, char **env)
 		return;
 	which(tokens, env, command);
 	
-	printf("%s", command);
+	/* guardamos la direccion del comando en la primera picicion de tokens */
+	tokens[0] = command;
 
+	command_execute(tokens, env);
 }
 
 

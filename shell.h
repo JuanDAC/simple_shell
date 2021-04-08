@@ -34,10 +34,12 @@ char *string_token_index(char **string_to, char *string_from, int init_index, co
 void parser(char *line, char **tokens);
 
 void executor(char **, char **);
+void command_execute(char **, char **);
 
 
 #define SIGN ("$ ")
 #define BUFFER_SIZE (4096)
+#define PERROR perror("Error:")
 
 
 #endif /*SHELL_H*/
