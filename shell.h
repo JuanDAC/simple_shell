@@ -36,10 +36,12 @@ void parser(char *line, char **tokens);
 void executor(char **, char **);
 void command_execute(char **, char **);
 
+void __attribute__((constructor)) add_signals(void);
 
 #define SIGN ("$ ")
 #define BUFFER_SIZE (4096)
-#define PERROR perror("Error:")
+#define PERROR perror("Error")
+#define DEADED_CHILD (256)
 
 
 #endif /*SHELL_H*/

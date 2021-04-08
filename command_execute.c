@@ -9,16 +9,17 @@ void command_execute(char **tokens, char **env)
 
 	if (pid == 0)
 	{
-		if (execve(tokens[0], tokens, env) == -1)
+		if (execve(tokens[0], tokens, env) == EOF)
 		{
 			PERROR;
+			exit(DEADED_CHILD);
 		}
 	}
 	else if (pid > 0)
 	{
 		wait(&status);
 	}
-	else if (pid == -1)
+	else if (pid == EOF)
 	{
 		PERROR;
 	}

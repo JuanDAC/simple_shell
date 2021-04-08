@@ -8,9 +8,9 @@ void buffer_concat(char **buffer, char *slash, char *command)
 		return;
 
 	i = length_string(*buffer);
-	/* remplzamos el nulo por el slash EJ "/bin/" */
-	(*buffer)[i] = *slash;
-	i++;
+	/* remplzamos el nulo por el string slash EJ "/bin/" */
+	for (j = 0; slash[j]; j++, i++)
+		(*buffer)[i] = slash[j];
 	/* concatenamos el commando que nos llegue EJ "/bin/ls"*/
 	for (j = 0; command[j]; j++, i++)
 		(*buffer)[i] = command[j];
@@ -30,8 +30,11 @@ void which(char **tokens, char **env, char *command)
 {
 	int i, j;
 	char *path_content;
+	
 
-
+	buffer_concat(&command, tokens[0], "");
+	if (access(command, X_OK) == 0)
+		return;
 	/* leer el PATH y traer las direcciones y concatenarlas con el comando que nos llegue*/
 	for (i = 0; env[i]; i++)
 	{

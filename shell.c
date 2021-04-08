@@ -3,6 +3,18 @@
 #define ARGS_UNUSED int c __attribute__((unused)), \
 	char **v __attribute__((unused))
 
+void sigint_handler()
+{
+	signal(SIGINT, sigint_handler);
+	fflush(stdout);
+}
+
+void add_signals(void)
+{
+	/* signal SIGINT of Ctrl+C */
+	signal(SIGINT, sigint_handler);
+}
+
 /**
  * main - entry point
  * @ARGS_UNUSED: argc and argv
@@ -15,17 +27,22 @@ int main(ARGS_UNUSED, char **env)
 	char current_line[BUFFER_SIZE];
 	size_t length_current_line = BUFFER_SIZE;
 
-	/*extract_path(env, &current_path);*/
 
-	do {
-		/* (void) -> prompt() -> string */
+	if (isatty(STDIN_FILENO))
+		do {
+			/* (void) -> prompt() -> string */
+			prompt(current_line, &length_current_line);
+			/* (string) -> parser() -> tokens[] */  
+			parser(current_line, (char **)tokens);
+			/* (tokens[]) -> (evn) -> executor() -> "status" */
+			executor((char **)tokens, env);
+		} while (1);
+	else
+	{
 		prompt(current_line, &length_current_line);
-		/* (string) -> parser() -> tokens[] */  
 		parser(current_line, (char **)tokens);
-		/* (tokens[]) -> (evn) -> executor() -> "status" */
 		executor((char **)tokens, env);
-
-	} while (1);
+	}
 
 	return (0);
 }
