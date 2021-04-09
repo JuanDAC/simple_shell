@@ -105,47 +105,24 @@ void buffer_concat(char **buffer, char *slash, char *command)
 	(*buffer)[i] = '\0';
 }
 
-unsigned int print_number(int n, char *buffer, int i)
+unsigned int unsigned_int_to_buffer(int n, char *buffer, int i)
 {
 	unsigned int num = n;
-	unsigned int length;
+	unsigned int length = 0;
 
-	if (n < 0)
-	{
-		buffer[i] = '-';
-		num = -n;
-	}
+	if (num / 10)
+		length = unsigned_int_to_buffer(num / 10, buffer, i + 1);
 	else
-	{
-		num = n;
-	}
+		length = i;
+
+	buffer[length - i] = (num % 10 + '0');
+
 	if (num / 10)
 	{
-		length = print_number(num / 10, buffer, i + 1);
+		buffer[length + 1] = '\0';
+		return (length);
 	}
 	else
-	{
 		return (i);
-	}	
-
-	buffer[length - i + 1] = (num % 10 + '0');
-	printf("%d\n", length - i);
-/*if (i == 0)
-
-		buffer[length] = '\0';
-*/
-	return (length);
 }
 
-
-int main()
-{
-	int number = 15;
-	char buffer[10];
-
-	print_number(number, buffer, 0);
-	
-	printf("%s\n", buffer);
-
-	return 0;
-}

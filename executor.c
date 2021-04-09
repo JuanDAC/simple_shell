@@ -40,7 +40,7 @@ void which(char **tokens, char **env, char *command)
 void executor(char **tokens, char **env, char *call_to_execute, 
 unsigned int *count_prompt)
 {	
-	char menssage_err[BUFFER_SIZE] = "";
+	char message_err[BUFFER_SIZE] = "";
 	char command[BUFFER_SIZE] = "";
 
 	if (!*tokens)
@@ -48,7 +48,8 @@ unsigned int *count_prompt)
 	which(tokens, env, command);
 
 	/* guardamos la direccion del comando en la primera picicion de tokens */
-	tokens[0] = command;
+	if (*command)
+		tokens[0] = command;
 
 	command_execute(tokens, env, call_to_execute, count_prompt, message_err);
 }

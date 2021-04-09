@@ -38,12 +38,14 @@ char *prompt(
 	bool print_prompt);
 
 int length_string(char *string);
+void buffer_concat(char **buffer, char *slash, char *command);
 bool includes_string(char *string, char *search_string, const bool variadic, ...);
 char *string_token_index(char **string_to, char *string_from, int init_index, const char *separator, int index);
 void parser(char *line, char **tokens);
+unsigned int unsigned_int_to_buffer(int n, char *buffer, int i);
 
-void executor(char **, char **);
-void command_execute(char **, char **);
+void executor(char **, char **, char *, unsigned int *);
+void command_execute(char **, char **, char *, unsigned int *, char *);
 
 void __attribute__((constructor)) add_signals(void);
 

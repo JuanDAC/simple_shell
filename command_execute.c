@@ -4,9 +4,6 @@ void command_execute(char **tokens, char **env,
 char *call_to_execute, unsigned int *count_prompt,
 char *menssage_err)
 {
-
-
-
 	pid_t pid;
 	int status;
 
@@ -16,9 +13,11 @@ char *menssage_err)
 	{
 		if (execve(tokens[0], tokens, env) == EOF)
 		{
-			buffer_concat(&menssage_err, call_to_execute, ": ");	
-			buffer_concat(&menssage_err, itoa(*count_prompt), ": ");
-			buffer_concat(&menssage_err, tokens[0], "not found");
+			unsigned int unsigned_int_to_buffer(int n, char *buffer, int i);
+			buffer_concat(&menssage_err, call_to_execute, ": ");
+			unsigned_int_to_buffer(*count_prompt, (menssage_err + length_string(menssage_err)), 0);
+			buffer_concat(&menssage_err, ": ", tokens[0]);
+			buffer_concat(&menssage_err, ": ", "not found\n");
 			write(STDERR_FILENO, menssage_err, length_string(menssage_err));
 			exit(DEADED_CHILD);
 		}
