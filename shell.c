@@ -48,7 +48,7 @@ int main(
 			if (includes_string(tokens[0], "exit", false))
 				exit(atoi(tokens[1] ? tokens[1] : "98"));
 			/* (tokens[]) -> (evn) -> executor() -> "status" */
-			executor((char **)tokens, env);
+			executor((char **)tokens, env, call_to_execute, &count_prompt);
 		} while (1);
 	}
 	else
@@ -60,7 +60,7 @@ int main(
 			false
 		);
 		parser(current_line, (char **)tokens);
-		executor((char **)tokens, env);
+		executor((char **)tokens, env, call_to_execute, &count_prompt);
 	}
 
 	return (0);

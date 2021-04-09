@@ -1,23 +1,5 @@
 #include "shell.h"
 
-void buffer_concat(char **buffer, char *slash, char *command)
-{
-	int i, j;
-
-	if (!buffer || !slash || !command)
-		return;
-
-	i = length_string(*buffer);
-	/* remplzamos el nulo por el string slash EJ "/bin/" */
-	for (j = 0; slash[j]; j++, i++)
-		(*buffer)[i] = slash[j];
-	/* concatenamos el commando que nos llegue EJ "/bin/ls"*/
-	for (j = 0; command[j]; j++, i++)
-		(*buffer)[i] = command[j];
-	/*agregamos el nulo de caracter al final*/
-	(*buffer)[i] = '\0';
-}
-
 void fill_buffer_null(char *buffer)
 {
 	while (*buffer)
@@ -55,8 +37,10 @@ void which(char **tokens, char **env, char *command)
 }
 
 
-void executor(char **tokens, char **env)
-{
+void executor(char **tokens, char **env, char *call_to_execute, 
+unsigned int *count_prompt)
+{	
+	char menssage_err[BUFFER_SIZE] = "";
 	char command[BUFFER_SIZE] = "";
 
 	if (!*tokens)
@@ -66,7 +50,7 @@ void executor(char **tokens, char **env)
 	/* guardamos la direccion del comando en la primera picicion de tokens */
 	tokens[0] = command;
 
-	command_execute(tokens, env);
+	command_execute(tokens, env, call_to_execute, count_prompt, message_err);
 }
 
 

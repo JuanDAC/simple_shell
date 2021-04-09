@@ -87,3 +87,65 @@ char *string_token_index(
 }
 
 
+void buffer_concat(char **buffer, char *slash, char *command)
+{
+	int i, j;
+
+	if (!buffer || !slash || !command)
+		return;
+
+	i = length_string(*buffer);
+	/* remplzamos el nulo por el string slash EJ "/bin/" */
+	for (j = 0; slash[j]; j++, i++)
+		(*buffer)[i] = slash[j];
+	/* concatenamos el commando que nos llegue EJ "/bin/ls"*/
+	for (j = 0; command[j]; j++, i++)
+		(*buffer)[i] = command[j];
+	/*agregamos el nulo de caracter al final*/
+	(*buffer)[i] = '\0';
+}
+
+unsigned int print_number(int n, char *buffer, int i)
+{
+	unsigned int num = n;
+	unsigned int length;
+
+	if (n < 0)
+	{
+		buffer[i] = '-';
+		num = -n;
+	}
+	else
+	{
+		num = n;
+	}
+	if (num / 10)
+	{
+		length = print_number(num / 10, buffer, i + 1);
+	}
+	else
+	{
+		return (i);
+	}	
+
+	buffer[length - i + 1] = (num % 10 + '0');
+	printf("%d\n", length - i);
+/*if (i == 0)
+
+		buffer[length] = '\0';
+*/
+	return (length);
+}
+
+
+int main()
+{
+	int number = 15;
+	char buffer[10];
+
+	print_number(number, buffer, 0);
+	
+	printf("%s\n", buffer);
+
+	return 0;
+}
