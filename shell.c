@@ -38,9 +38,7 @@ int main(ARGS_UNUSED, char **env)
 			/* (string) -> parser() -> tokens[] */  
 			parser(current_line, (char **)tokens);
 			if (includes_string(tokens[0], "exit", false))
-			{
-				exit(98);
-			}	
+				exit(atoi(tokens[1] ? tokens[1] : "98"));
 			/* (tokens[]) -> (evn) -> executor() -> "status" */
 			executor((char **)tokens, env);
 		} while (1);

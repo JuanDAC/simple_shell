@@ -35,6 +35,7 @@ void which(char **tokens, char **env, char *command)
 	buffer_concat(&command, tokens[0], "");
 	if (access(command, X_OK) == 0)
 		return;
+	fill_buffer_null(command);
 	/* leer el PATH y traer las direcciones y concatenarlas con el comando que nos llegue*/
 	for (i = 0; env[i]; i++)
 	{
@@ -61,7 +62,7 @@ void executor(char **tokens, char **env)
 	if (!*tokens)
 		return;
 	which(tokens, env, command);
-	
+
 	/* guardamos la direccion del comando en la primera picicion de tokens */
 	tokens[0] = command;
 
