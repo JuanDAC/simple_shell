@@ -1,7 +1,5 @@
 #include "shell.h"
 
-#define ARGS_UNUSED int c __attribute__((unused)), \
-	char **v __attribute__((unused))
 
 void sigint_handler()
 {
@@ -23,18 +21,28 @@ void add_signals(void)
  * @env: argc and argv
  * Return: o if success
  */
-int main(ARGS_UNUSED, char **env)
+int main(
+	int c __attribute__((unused)),
+	char **arguments_value,
+	char **env)
 {
 	char *tokens[BUFFER_SIZE];
 	char current_line[BUFFER_SIZE];
 	size_t length_current_line = BUFFER_SIZE;
+	unsigned int count_prompt = 0;
+	char *call_to_execute = *arguments_value;
 
-
+	(void)call_to_execute;
 	if (isatty(STDIN_FILENO))
-	{	
+	{
 		do {
 			/* (void) -> prompt() -> string */
-			prompt(current_line, &length_current_line, true);
+			prompt(
+				current_line,
+				&length_current_line,
+				&count_prompt,
+				true
+			);
 			/* (string) -> parser() -> tokens[] */  
 			parser(current_line, (char **)tokens);
 			if (includes_string(tokens[0], "exit", false))
@@ -42,10 +50,15 @@ int main(ARGS_UNUSED, char **env)
 			/* (tokens[]) -> (evn) -> executor() -> "status" */
 			executor((char **)tokens, env);
 		} while (1);
-	}	
+	}
 	else
 	{
-		prompt(current_line, &length_current_line, false);
+		prompt(
+			current_line,
+			&length_current_line,
+			&count_prompt,
+			false
+		);
 		parser(current_line, (char **)tokens);
 		executor((char **)tokens, env);
 	}

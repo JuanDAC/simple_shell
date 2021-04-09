@@ -1,12 +1,17 @@
 #include "shell.h"
 
 
-char *prompt(char *buffer, size_t *length_buffer, bool print_prompt)
+char *prompt(
+	char *buffer,
+	size_t *length_buffer,
+	unsigned int *count_prompt,
+	bool print_prompt)
 {
 	ssize_t length_characters = 0;
 
 	if (print_prompt)
 		PRINT_PRONPT;
+	*count_prompt += 1;
 	length_characters = getline(&buffer, length_buffer, stdin);
 	if (length_characters == EOF)
 	{
