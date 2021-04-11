@@ -18,18 +18,27 @@ void error_handler(char **tokens, char *menssage_err,
 char *call_to_execute, unsigned int *count_prompt)
 {
 	char *info_message_error;
-	char command_name[256];
+	char *command_name;
 	int index = 0;
-	printf("\n*tokens:%s\n", (*tokens));
-	printf("\nF_OK:%d\n", access(*tokens, F_OK));
-	printf("\nX_OK:%d\n", access(*tokens, X_OK));
+	int i;
 
-	if (access(*tokens, F_OK) == 0 && access(*tokens, X_OK) == EOF)
+	
+	if (access(*tokens, F_OK) == 0 && access(*tokens, X_OK) == -1)
 	{
 		info_message_error = "Permission denied\n";
-		index = count_includes_characters(*tokens, '/');
-		printf("index: %d, *tokens: %s", index, *tokens);
-		string_token_index((char **)&command_name, *tokens, 1, "/", index - 3);
+		index = count_includes_characters(*tokens + 1, '/');
+		for (i = 0; i <= index; i++)
+		{
+			command_name = strtok( i ? NULL : *tokens, "/");
+		}
+	}
+	else if (access(*tokens, F_OK) == 0 && access(*tokens, R_OK) == -1)
+	{
+		
+		buffer_concat(&menssage_err, call_to_execute, ": 0: Can't open ");
+		buffer_concat(&menssage_err, tokens[0], "");
+		write(STDERR_FILENO, menssage_err, length_string(menssage_err));
+		return;
 	}
 	else if (length_string(*tokens) >= 256)
 	{
@@ -68,6 +77,7 @@ char *menssage_err)
 	else if (pid > 0)
 	{
 		wait(&status);
+		//printf("status: %d", status);
 	}
 	else if (pid == EOF)
 	{

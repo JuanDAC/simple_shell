@@ -23,3 +23,4 @@ char *prompt(
 	/*write(1, buffer, length_characters);*/
 	return (buffer);
 }
+

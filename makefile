@@ -21,3 +21,7 @@ gdb:
 	@gcc -g -Wall -Werror -Wextra -pedantic *.c -o hsh
 	@gdb ./hsh ; rm -f hsh
 
+gdb-c:
+	@gcc -g -Wall -Werror -Wextra -pedantic *.c -o hsh
+	@gdb ./hsh ; rm -f hsh
+

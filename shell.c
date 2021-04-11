@@ -56,36 +56,21 @@ int main(
 	unsigned int count_prompt = 0;
 	char *call_to_execute = *arguments_value;
 
-	if (isatty(STDIN_FILENO))
-	{
-		do {
-			/* (void) -> prompt() -> string */
-			prompt(
-				current_line,
-				&length_current_line,
-				&count_prompt,
-				true
-			);
-			/* (string) -> parser() -> tokens[] */  
-			parser(current_line, (char **)tokens);
-			/* (tokens[]) -> (evn) -> executor() -> "status" */
-			
-			buildtin((char **)tokens, env, call_to_execute, &count_prompt);
-			executor((char **)tokens, env, call_to_execute, &count_prompt);
-		} while (1);
-	}
-	else
-	{
+	do {
+		/* (void) -> prompt() -> string */
 		prompt(
 			current_line,
 			&length_current_line,
 			&count_prompt,
-			false
+			isatty(STDIN_FILENO) // true
 		);
+		/* (string) -> parser() -> tokens[] */  
 		parser(current_line, (char **)tokens);
+		/* (tokens[]) -> (evn) -> executor() -> "status" */
+		
 		buildtin((char **)tokens, env, call_to_execute, &count_prompt);
 		executor((char **)tokens, env, call_to_execute, &count_prompt);
-	}
+	} while (1);
 
 	return (0);
 }
