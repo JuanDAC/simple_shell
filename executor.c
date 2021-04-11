@@ -27,7 +27,7 @@ void which(char **tokens, char **env, char *command)
 			do {
 				path_content = string_token_index(&command, env[i], 5, ":", j);
 				buffer_concat(&command, "/", tokens[0]);
-				if (access(command, X_OK) == 0)
+				if (access(command, F_OK) == 0)
 					return;
 				j += 1;
 			} while (path_content);

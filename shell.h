@@ -45,6 +45,7 @@ void parser(char *line, char **tokens);
 unsigned int unsigned_int_to_buffer(int n, char *buffer, int i);
 
 void executor(char **, char **, char *, unsigned int *);
+void buildtin(char **,char **,char *,unsigned int *);
 void command_execute(char **, char **, char *, unsigned int *, char *);
 
 void __attribute__((constructor)) add_signals(void);

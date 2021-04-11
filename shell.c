@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 void sigint_handler()
 {
 	signal(SIGINT, sigint_handler);
@@ -13,6 +12,31 @@ void add_signals(void)
 {
 	/* signal SIGINT of Ctrl+C */
 	signal(SIGINT, sigint_handler);
+}
+
+int _atoi(char *string_number)
+{
+	int i, resolve, scale;
+
+	i = length_string(string_number) - 1;
+	resolve = 0;
+	for (scale = 1; i >= 0; i -= 1, scale *= 10)
+	{
+		resolve += (string_number[i] & 0x0F) * scale;
+	}
+
+	return (resolve);
+}
+
+void buildtin(char **tokens, char **env, char *call_to_execute, unsigned int *count_prompt)
+{
+	(void)env;
+	(void)call_to_execute;
+	(void)count_prompt;
+	if (includes_string(*tokens, "exit", false))
+	{
+		exit(_atoi(tokens[1] ? tokens[1] : "98"));
+	}
 }
 
 /**
@@ -32,7 +56,6 @@ int main(
 	unsigned int count_prompt = 0;
 	char *call_to_execute = *arguments_value;
 
-	(void)call_to_execute;
 	if (isatty(STDIN_FILENO))
 	{
 		do {
@@ -45,9 +68,9 @@ int main(
 			);
 			/* (string) -> parser() -> tokens[] */  
 			parser(current_line, (char **)tokens);
-			if (includes_string(tokens[0], "exit", false))
-				exit(atoi(tokens[1] ? tokens[1] : "98"));
 			/* (tokens[]) -> (evn) -> executor() -> "status" */
+			
+			buildtin((char **)tokens, env, call_to_execute, &count_prompt);
 			executor((char **)tokens, env, call_to_execute, &count_prompt);
 		} while (1);
 	}
@@ -60,8 +83,10 @@ int main(
 			false
 		);
 		parser(current_line, (char **)tokens);
+		buildtin((char **)tokens, env, call_to_execute, &count_prompt);
 		executor((char **)tokens, env, call_to_execute, &count_prompt);
 	}
 
 	return (0);
 }
+
