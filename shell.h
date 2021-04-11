@@ -25,12 +25,12 @@ typedef unsigned char bool;
  * @false: type data false
  * @true: type data false
  */
-//typedef enum Boolean
-//{
-//	false,
-//	true
-//} bool;
-
+/*typedef enum Boolean
+{
+	false,
+	true
+} bool;
+*/
 char *prompt(
 	char *buffer,
 	size_t *length_buffer,
