@@ -1,11 +1,5 @@
 #include "shell.h"
 
-void fill_buffer_null(char *buffer)
-{
-	while (*buffer)
-		*buffer++ = '\0';
-}
-
 
 
 void which(char **tokens, char **env, char *command)

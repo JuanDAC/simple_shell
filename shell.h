@@ -16,9 +16,25 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
+
+
+#define fill_buffer_null(B)    \
+do {                           \
+	char *fill_buffer = (B);   \
+	while (*fill_buffer)       \
+		*fill_buffer++ = '\0'; \
+} while (0)
+
+
+
+
+
 typedef unsigned char bool;
 #define true (1)
 #define false (!true)
+#define COMMAND_NOT_FOUND (127)
+#define COMMAND_NOT_EXECUTE (127)
+#define GENERICS_ERROR (2)
 
 /**
  * enum Boolean - Boolean

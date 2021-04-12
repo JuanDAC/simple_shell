@@ -16,7 +16,7 @@ char *prompt(
 	if (length_characters == EOF)
 	{
 		NEW_LINE;
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	/*delete '\n' in last character */
 	buffer[length_characters - 1] = '\0';
