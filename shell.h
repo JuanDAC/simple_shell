@@ -18,11 +18,22 @@
 
 #define fill_buffer_null(B)     \
 do {                            \
+	int _i = 1024;              \
 	char *_fill_buffer = (B);   \
-	while (*_fill_buffer)       \
-		*_fill_buffer++ = '\0'; \
+	while (_i--)                \
+		_fill_buffer[_i] = '\0';\
 } while (0)
 
+#define copy_in_buffer(D, S, T)   \
+do {                              \
+	T *_destiny = (D);            \
+	T *_source = (S);             \
+	while (*_source)              \
+		*_destiny++ = *_source++; \
+	*_destiny = '\0';             \
+} while (0)
+
+/* TODO */
 #define COMMAND_NOT_FOUND (127)
 #define COMMAND_NOT_EXECUTE (126)
 #define GENERICS_ERROR (2)
@@ -41,7 +52,7 @@ void parser(char *, char **);
 unsigned int unsigned_int_to_buffer(int, char *, int);
 void executor(char **, char **, char *, unsigned int *);
 bool buildtin(char *, char **, char **, char *, unsigned int *);
-void command_execute(char **, char **, char *, unsigned int *);
+void command_execute(char *, char **, char **, char *, unsigned int *);
 void __attribute__((constructor)) add_signals(void);
 
 #define SIGN ("$ ")

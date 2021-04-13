@@ -30,7 +30,6 @@ void hsh_print(int file_descriptor, const char *format, ...)
 	int number;
 
 	va_start(argumets, format);
-	fill_buffer_null(string_number);
 	buffer = finaly_string;
 	while (*format)
 		if (*format == '%')
@@ -44,6 +43,7 @@ void hsh_print(int file_descriptor, const char *format, ...)
 						*buffer++ = *string++;
 					break;
 				case 'd':
+					fill_buffer_null(string_number);
 					number = va_arg(argumets, int);
 					unsigned_int_to_buffer(number, string_number, 0);
 					string = string_number;
@@ -63,7 +63,6 @@ void hsh_print(int file_descriptor, const char *format, ...)
 	write(file_descriptor, finaly_string, length_string(finaly_string));
 }
 
-
 /**
 * error_handler - error handler of a child
 * @tokens: tokens the input user
@@ -72,39 +71,36 @@ void hsh_print(int file_descriptor, const char *format, ...)
 * Return: void
 */
 void error_handler(
-	char **tokens,
+	char *command_source,
+	char *command_name,
 	char *call_to_execute,
 	unsigned int *count_prompt
 )
 {
-	int index = 0, i;
-	char *command_name;
-
-	if (access(*tokens, F_OK) == 0 && access(*tokens, X_OK) == -1)
+	if (access(command_source, F_OK) == 0
+		&& access(command_source, X_OK) == -1)
 	{
-		index = count_includes_characters(*tokens + 1, '/');
-		for (i = 0; i <= index; i++)
-			command_name = strtok(i ? NULL : *tokens, "/");
 		hsh_print(STDERR_FILENO, "%s: %d: %s: Permission denied\n",
 			call_to_execute, *count_prompt, command_name
 		);
 	}
-	else if (access(*tokens, F_OK) == 0 && access(*tokens, R_OK) == -1)
+	else if (access(command_source, F_OK) == 0
+		&& access(command_source, R_OK) == -1)
 	{
 		hsh_print(STDERR_FILENO, "%s: 0: Can't open %s\n",
-			call_to_execute, *tokens
+			call_to_execute, command_source
 		);
 	}
-	else if (length_string(*tokens) >= 256)
+	else if (length_string(command_name) >= 256)
 	{
 		hsh_print(STDERR_FILENO, "%s: %d: %s: File name too long\n",
-			call_to_execute, *count_prompt, *tokens
+			call_to_execute, *count_prompt, command_name
 		);
 	}
 	else
 	{
 		hsh_print(STDERR_FILENO, "%s: %d: %s: not found\n",
-			call_to_execute, *count_prompt, *tokens
+			call_to_execute, *count_prompt, command_name
 		);
 	}
 }
@@ -118,6 +114,7 @@ void error_handler(
 * Return: void
 */
 void command_execute(
+	char *command_source,
 	char **tokens,
 	char **env,
 	char *call_to_execute,
@@ -131,11 +128,12 @@ void command_execute(
 
 	if (pid == 0)
 	{
-		if (execve(tokens[0], tokens, env) == EOF)
+		if (execve(command_source, tokens, env) == EOF)
 		{
-			error_handler(tokens, call_to_execute, count_prompt);
+			error_handler(command_source, *tokens, call_to_execute, count_prompt);
 			exit(DEADED_CHILD);
 		}
+		exit(DEADED_CHILD);
 	}
 	else if (pid > 0)
 	{
@@ -143,7 +141,7 @@ void command_execute(
 	}
 	else if (pid == EOF)
 	{
-		error_handler(tokens, call_to_execute, count_prompt);
+		error_handler(command_source, *tokens, call_to_execute, count_prompt);
 	}
 }
 

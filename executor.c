@@ -59,10 +59,10 @@ void executor(
 	which(tokens, env, command);
 
 	/* guardamos la direccion del comando en la primera picicion de tokens */
-	if (*command)
-		tokens[0] = command;
+	if (!*command)
+		copy_in_buffer(command, tokens[0], char);
 
-	command_execute(tokens, env, call_to_execute, count_prompt);
+	command_execute(command, tokens, env, call_to_execute, count_prompt);
 }
 
 

@@ -25,7 +25,8 @@ void prompt(
 	if (length_characters == EOF)
 	{
 		free(*current_line);
-		NEW_LINE;
+		if (print_prompt)
+			NEW_LINE;
 		exit(EXIT_SUCCESS);
 	}
 	/*delete '\n' in last character to replace with a '\0' */
