@@ -36,9 +36,9 @@ int _atoi(char *string_number)
 	i = length_string(string_number) - 1;
 	resolve = 0;
 	for (scale = 1; i >= 0; i -= 1, scale *= 10)
-		if (string_number[i] == '-')
+	/*	if (string_number[i] == '-')
 			resolve *= -1;
-		else
+		else*/
 			resolve += (string_number[i] & 0x0F) * scale;
 	return (resolve);
 }
@@ -63,10 +63,16 @@ bool buildtin(
 	(void)env;
 	(void)call_to_execute;
 	(void)count_prompt;
+	char buffer[1024];
+	char *status = buffer;
+
+	fill_buffer_null(status);
 	if (includes_string(*tokens, "exit", false))
 	{
+		buffer_concat(&status, "", tokens[1]);
 		free(current_line);
-		exit(_atoi(tokens[1] ? tokens[1] : "98"));
+		exit(_atoi(*status ? status : "98"));
+		return(true);
 	}
 	return (false);
 }
