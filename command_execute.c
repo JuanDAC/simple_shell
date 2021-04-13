@@ -1,6 +1,11 @@
 #include "shell.h"
 
-
+/**
+* count_includes_characters - count includes characters
+* @string: string to search
+* @character: character a buscar
+* Return: number of eachs character includes
+*/
 int count_includes_characters(char *string, char character)
 {
 	if (!string || !*string)
@@ -11,8 +16,12 @@ int count_includes_characters(char *string, char character)
 
 	return (count_includes_characters(string + 1, character));
 }
-
-
+/**
+* hsh_print - mini printf
+* @file_descriptor: file descriptor
+* @format: format printf
+* Return: Alwais void
+*/
 void hsh_print(int file_descriptor, const char *format, ...)
 {
 	char finaly_string[1024], string_number[1024];
@@ -21,12 +30,9 @@ void hsh_print(int file_descriptor, const char *format, ...)
 	int number;
 
 	va_start(argumets, format);
-
 	fill_buffer_null(string_number);
-
 	buffer = finaly_string;
 	while (*format)
-	{
 		if (*format == '%')
 		{
 			format++;
@@ -44,26 +50,36 @@ void hsh_print(int file_descriptor, const char *format, ...)
 					while (*string)
 						*buffer++ = *string++;
 					break;
+				case 'c':
+					*buffer++ = (char)va_arg(argumets, int);
+					break;
 			}
 			format++;
 		}
 		else
-		{
 			*buffer++ = *format++;
-		}
-	}
 	*buffer = '\0';
 	va_end(argumets);
 	write(file_descriptor, finaly_string, length_string(finaly_string));
 }
 
-void error_handler(char **tokens, char *menssage_err,
-char *call_to_execute, unsigned int *count_prompt)
+
+/**
+* error_handler - error handler of a child
+* @tokens: tokens the input user
+* @call_to_execute: string type to access to this program
+* @count_prompt: save the count the prints prompt
+* Return: void
+*/
+void error_handler(
+	char **tokens,
+	char *call_to_execute,
+	unsigned int *count_prompt
+)
 {
 	int index = 0, i;
 	char *command_name;
 
-	(void)menssage_err;
 	if (access(*tokens, F_OK) == 0 && access(*tokens, X_OK) == -1)
 	{
 		index = count_includes_characters(*tokens + 1, '/');
@@ -93,10 +109,20 @@ char *call_to_execute, unsigned int *count_prompt)
 	}
 }
 
-
-void command_execute(char **tokens, char **env,
-char *call_to_execute, unsigned int *count_prompt,
-char *menssage_err)
+/**
+* command_execute - command execute
+* @tokens: tokens the input user
+* @call_to_execute: string type to access to this program
+* @count_prompt: save the count the prints prompt
+* @env: environment
+* Return: void
+*/
+void command_execute(
+	char **tokens,
+	char **env,
+	char *call_to_execute,
+	unsigned int *count_prompt
+)
 {
 	pid_t pid;
 	int status;
@@ -107,20 +133,19 @@ char *menssage_err)
 	{
 		if (execve(tokens[0], tokens, env) == EOF)
 		{
-			error_handler(tokens, menssage_err, call_to_execute, count_prompt);
+			error_handler(tokens, call_to_execute, count_prompt);
 			exit(DEADED_CHILD);
 		}
 	}
 	else if (pid > 0)
 	{
 		wait(&status);
-		//printf("status: %d", status);
 	}
 	else if (pid == EOF)
 	{
-		error_handler(tokens, menssage_err, call_to_execute, count_prompt);
+		error_handler(tokens, call_to_execute, count_prompt);
 	}
-}	
+}
 
 
 

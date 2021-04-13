@@ -1,40 +1,57 @@
 #include "shell.h"
 
-
-
+/**
+* which - save the sourse teh command in variable @command
+* @tokens: tokens the input user
+* @env: environment
+* @command: buffer to save command
+* Return: Alwais void
+*/
 void which(char **tokens, char **env, char *command)
 {
 	int i, j;
 	char *path_content;
-	
 
 	buffer_concat(&command, tokens[0], "");
 	if (access(command, X_OK) == 0)
 		return;
+
 	fill_buffer_null(command);
-	/* leer el PATH y traer las direcciones y concatenarlas con el comando que nos llegue*/
+	/* search the $PATH and get directions from value*/
+
 	for (i = 0; env[i]; i++)
-	{
 		if (includes_string(env[i], "PATH", false))
 		{
 			j = 0;
 			do {
+				/* concat the command with source directory */
 				path_content = string_token_index(&command, env[i], 5, ":", j);
 				buffer_concat(&command, "/", tokens[0]);
+				/* stop when the true command saved in variable @command */
 				if (access(command, F_OK) == 0)
 					return;
 				j += 1;
 			} while (path_content);
 		}
-	}
 	fill_buffer_null(command);
 }
 
 
-void executor(char **tokens, char **env, char *call_to_execute, 
-unsigned int *count_prompt)
-{	
-	char message_err[BUFFER_SIZE] = "";
+/**
+* executor - call to logic for to search source and command execute
+* @tokens: tokens the input user
+* @call_to_execute: string type to access to this program
+* @count_prompt: save the count the prints prompt
+* @env: environment
+* Return: void
+*/
+void executor(
+	char **tokens,
+	char **env,
+	char *call_to_execute,
+	unsigned int *count_prompt
+)
+{
 	char command[BUFFER_SIZE] = "";
 
 	if (!*tokens)
@@ -45,7 +62,7 @@ unsigned int *count_prompt)
 	if (*command)
 		tokens[0] = command;
 
-	command_execute(tokens, env, call_to_execute, count_prompt, message_err);
+	command_execute(tokens, env, call_to_execute, count_prompt);
 }
 
 

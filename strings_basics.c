@@ -1,8 +1,10 @@
 #include "shell.h"
+
+
 /**
 * length_string - get length to strings
-* @string: string to get length
-* Return: length
+* @string: any string than last position it's a null character value
+* Return: length of the @string
 */
 int length_string(char *string)
 {
@@ -12,15 +14,22 @@ int length_string(char *string)
 	/* *string == '\0' return length 0 */
 	if (!*string)
 		return (0);
-
 	/* add weight of a character than 1 */
 	return (1 + length_string(string + 1));
 }
 
+/**
+* includes_string - determines whether @string includes a search_string
+* @string: string to get length
+* @search_string: subtring in @string
+* @variadic: active variadic
+* Return: true or false as appropriate
+*/
 bool includes_string(
 	char *string,
 	char *search_string,
-	const bool variadic, ...)
+	const bool variadic, ...
+)
 {
 	int from_index;
 	va_list argumets;
@@ -43,6 +52,15 @@ bool includes_string(
 	return (includes_string(string + 1, search_string + 1, false));
 }
 
+/**
+* string_token_index - copy index to @string_to from @string_from
+* @string_to: string buffer destiny
+* @string_from: from to copy
+* @init_index: index to init search
+* @index: index to to get
+* @separator: separator becouse index
+* Return: true or false as appropriate
+*/
 char *string_token_index(
 	char **string_to,
 	char *string_from,
@@ -66,9 +84,7 @@ char *string_token_index(
 	{
 		/*copiar en @string_to hasta el delimitador o un nulo caracter*/
 		for (i = 0; !(string_from[i] == *separator || string_from[i] == '\0'); i++)
-		{
 			(*string_to)[i] = string_from[i];
-		}
 		(*string_to)[i] = '\0';
 		return (*string_to);
 	}
@@ -87,13 +103,19 @@ char *string_token_index(
 }
 
 
+/**
+* buffer_concat - determines whether @string includes a search_string
+* @buffer: string to get length
+* @slash: string to get length
+* @command: string to get length
+* Return: true or false as appropriate
+*/
 void buffer_concat(char **buffer, char *slash, char *command)
 {
 	int i, j;
 
 	if (!buffer || !slash || !command)
 		return;
-
 	i = length_string(*buffer);
 	/* remplzamos el nulo por el string slash EJ "/bin/" */
 	for (j = 0; slash[j]; j++, i++)
@@ -105,17 +127,24 @@ void buffer_concat(char **buffer, char *slash, char *command)
 	(*buffer)[i] = '\0';
 }
 
-unsigned int unsigned_int_to_buffer(int n, char *buffer, int i)
+/**
+* unsigned_int_to_buffer - determines whether @string includes a search_string
+* @number: number to transform
+* @buffer: buffer to save
+* @idx: index of a buffer
+* Return: true or false as appropriate
+*/
+unsigned int unsigned_int_to_buffer(int number, char *buffer, int idx)
 {
-	unsigned int num = n;
+	unsigned int num = number;
 	unsigned int length = 0;
 
 	if (num / 10)
-		length = unsigned_int_to_buffer(num / 10, buffer, i + 1);
+		length = unsigned_int_to_buffer(num / 10, buffer, idx + 1);
 	else
-		length = i;
+		length = idx;
 
-	buffer[length - i] = (num % 10 + '0');
+	buffer[length - idx] = (num % 10 + '0');
 
 	if (num / 10)
 	{
@@ -123,6 +152,6 @@ unsigned int unsigned_int_to_buffer(int n, char *buffer, int i)
 		return (length);
 	}
 	else
-		return (i);
+		return (idx);
 }
 

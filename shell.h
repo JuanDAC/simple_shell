@@ -16,54 +16,32 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
-
-
-#define fill_buffer_null(B)    \
-do {                           \
-	char *fill_buffer = (B);   \
-	while (*fill_buffer)       \
-		*fill_buffer++ = '\0'; \
+#define fill_buffer_null(B)     \
+do {                            \
+	char *_fill_buffer = (B);   \
+	while (*_fill_buffer)       \
+		*_fill_buffer++ = '\0'; \
 } while (0)
 
-
-
-
-
-typedef unsigned char bool;
-#define true (1)
-#define false (!true)
 #define COMMAND_NOT_FOUND (127)
-#define COMMAND_NOT_EXECUTE (127)
+#define COMMAND_NOT_EXECUTE (126)
 #define GENERICS_ERROR (2)
 
-/**
- * enum Boolean - Boolean
- * @false: type data false
- * @true: type data false
- */
-/*typedef enum Boolean
-{
-	false,
-	true
-} bool;
-*/
-char *prompt(
-	char *buffer,
-	size_t *length_buffer,
-	unsigned int *count_prompt,
-	bool print_prompt);
+typedef unsigned char bool;
 
-int length_string(char *string);
-void buffer_concat(char **buffer, char *slash, char *command);
-bool includes_string(char *string, char *search_string, const bool variadic, ...);
-char *string_token_index(char **string_to, char *string_from, int init_index, const char *separator, int index);
-void parser(char *line, char **tokens);
-unsigned int unsigned_int_to_buffer(int n, char *buffer, int i);
+#define true (1)
+#define false (0)
 
+void prompt(char **, size_t *, unsigned int *, bool);
+int length_string(char *);
+void buffer_concat(char **, char *, char *);
+bool includes_string(char *, char *, const bool, ...);
+char *string_token_index(char **, char *, int, const char *, int);
+void parser(char *, char **);
+unsigned int unsigned_int_to_buffer(int, char *, int);
 void executor(char **, char **, char *, unsigned int *);
-void buildtin(char **,char **,char *,unsigned int *);
-void command_execute(char **, char **, char *, unsigned int *, char *);
-
+bool buildtin(char *, char **, char **, char *, unsigned int *);
+void command_execute(char **, char **, char *, unsigned int *);
 void __attribute__((constructor)) add_signals(void);
 
 #define SIGN ("$ ")
@@ -72,6 +50,5 @@ void __attribute__((constructor)) add_signals(void);
 #define DEADED_CHILD (256)
 #define PRINT_PRONPT write(1, SIGN, 2)
 #define NEW_LINE write(1, "\n", 1)
-
 
 #endif /*SHELL_H*/
