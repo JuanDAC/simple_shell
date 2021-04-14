@@ -49,6 +49,7 @@ void command_execute(char *, char **, char **, char *, unsigned int *);
 void __attribute__((constructor)) add_signals(void);
 char *_strtok(char *, const char *);
 void hsh_print(int, const char *, ...);
+bool equal_strings(char *, char *);
 
 #define SIGN ("$ ")
 #define BUFFER_SIZE (4096)

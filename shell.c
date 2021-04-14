@@ -67,7 +67,7 @@ bool buildtin(
 	(void)call_to_execute;
 	(void)count_prompt;
 
-	if (includes_string(*tokens, "exit", false))
+	if  (equal_strings(*tokens, "exit"))
 	{
 		/* refactorizar en una funcion */
 		status_number = _atoi(tokens[1] ? tokens[1] : "0");
