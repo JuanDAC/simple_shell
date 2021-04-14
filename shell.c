@@ -66,12 +66,12 @@ bool buildtin(
 	(void)env;
 	(void)call_to_execute;
 	(void)count_prompt;
-
+	(void)current_line;
 	if  (equal_strings(*tokens, "exit"))
 	{
 		/* refactorizar en una funcion */
 		/* status_number = _atoi(tokens[1] ? tokens[1] : "0"); */
-		free(current_line);
+		/*free(current_line);*/
 		/* exit(status_number < 0 ? 2 : status_number); */
 		exit(status);
 		return (true);
