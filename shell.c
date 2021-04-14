@@ -61,7 +61,7 @@ bool buildtin(
 	unsigned int *count_prompt
 )
 {
-	int status_number;
+	int status_number = 0;
 
 	(void)env;
 	(void)call_to_execute;
@@ -71,10 +71,9 @@ bool buildtin(
 	{
 		/* refactorizar en una funcion */
 		/* status_number = _atoi(tokens[1] ? tokens[1] : "0"); */
-		status_number = 0;
 		free(current_line);
 		/* exit(status_number < 0 ? 2 : status_number); */
-		exit(status_number);
+		exit(0);
 		return (true);
 	}
 	return (false);
