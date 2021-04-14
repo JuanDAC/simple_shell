@@ -74,7 +74,7 @@ bool buildtin(
 		status_number = 0;
 		free(current_line);
 		/* exit(status_number < 0 ? 2 : status_number); */
-		exit(status_number);
+		exit(EXIT_SUCCESS);
 		return (true);
 	}
 	return (false);
