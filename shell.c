@@ -61,11 +61,11 @@ bool buildtin(
 	unsigned int *count_prompt
 )
 {
+	int status_number;
+
 	(void)env;
 	(void)call_to_execute;
 	(void)count_prompt;
-	int status_number;
-
 
 	if (includes_string(*tokens, "exit", false))
 	{

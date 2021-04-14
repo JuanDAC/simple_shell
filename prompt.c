@@ -1,5 +1,5 @@
 #include "shell.h"
-
+#include <stdio.h>
 /**
 * prompt - implements features of prompt
 * @current_line: current line alloc

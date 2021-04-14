@@ -13,7 +13,7 @@
 auto-save-list
 tramp
 .\#*
-
+./test
 # Org-mode
 .org-id-locations
 *_archive
