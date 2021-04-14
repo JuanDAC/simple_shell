@@ -75,7 +75,8 @@ void error_handler(
 	char *command_source,
 	char *command_name,
 	char *call_to_execute,
-	unsigned int *count_prompt
+	unsigned int *count_prompt,
+	int *exit_status
 )
 {
 	if (access(command_source, F_OK) == 0
@@ -84,6 +85,7 @@ void error_handler(
 		hsh_print(STDERR_FILENO, "%s: %d: %s: Permission denied\n",
 			call_to_execute, *count_prompt, command_name
 		);
+		*exit_status = 126;
 	}
 	else if (access(command_source, F_OK) == 0
 		&& access(command_source, R_OK) == -1)
@@ -91,18 +93,21 @@ void error_handler(
 		hsh_print(STDERR_FILENO, "%s: 0: Can't open %s\n",
 			call_to_execute, command_source
 		);
+		*exit_status = 2;
 	}
 	else if (length_string(command_name) >= 256)
 	{
 		hsh_print(STDERR_FILENO, "%s: %d: %s: File name too long\n",
 			call_to_execute, *count_prompt, command_name
 		);
+		*exit_status = 2;
 	}
 	else
 	{
 		hsh_print(STDERR_FILENO, "%s: %d: %s: not found\n",
 			call_to_execute, *count_prompt, command_name
 		);
+		*exit_status = 127;
 	}
 }
 
@@ -120,7 +125,8 @@ void command_execute(
 	char **tokens,
 	char **env,
 	char *call_to_execute,
-	unsigned int *count_prompt
+	unsigned int *count_prompt,
+	int *exit_status
 )
 {
 	pid_t pid;
@@ -132,7 +138,7 @@ void command_execute(
 	{
 		if (execve(command_source, tokens, env) == EOF)
 		{
-			error_handler(command_source, *tokens, call_to_execute, count_prompt);
+			error_handler(command_source, *tokens, call_to_execute, count_prompt, exit_status);
 			exit(DEADED_CHILD);
 		}
 		exit(DEADED_CHILD);
@@ -143,7 +149,7 @@ void command_execute(
 	}
 	else if (pid == EOF)
 	{
-		error_handler(command_source, *tokens, call_to_execute, count_prompt);
+		error_handler(command_source, *tokens, call_to_execute, count_prompt, exit_status);
 	}
 }
 

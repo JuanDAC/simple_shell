@@ -58,11 +58,10 @@ bool buildtin(
 	char **tokens,
 	char **env,
 	char *call_to_execute,
-	unsigned int *count_prompt
+	unsigned int *count_prompt,
+	int *exit_status
 )
 {
-	int status_number;
-
 	(void)env;
 	(void)call_to_execute;
 	(void)count_prompt;
@@ -72,14 +71,15 @@ bool buildtin(
 		/*refactorizar en una funcion */
 		if ( !tokens[1] || is_number(tokens[1]))
 		{	
-			status_number = _atoi(tokens[1] ? tokens[1] : "0");
+			*exit_status = (tokens[1] ? _atoi(tokens[1]) : *exit_status);
 			free(current_line);
-			exit(status_number < 0 ? 2 : status_number);
+			exit(*exit_status < 0 ? 2 : *exit_status);
 		}
 		else
 		{
 			hsh_print(STDERR_FILENO, "%s: %d: exit: Illegal number: %s\n",
 			call_to_execute, *count_prompt, tokens[1]);
+			*exit_status = 2;
 		}	
 		return (true);
 	}
@@ -105,6 +105,7 @@ int main(
 	unsigned int count_prompt = 0;
 	char *call_to_execute = arguments_value[0];
 	bool buildtin_excecuted;
+	int exit_status = 0;
 
 	do {
 		prompt(
@@ -122,14 +123,16 @@ int main(
 			(char **)tokens,
 			env,
 			call_to_execute,
-			&count_prompt
+			&count_prompt,
+			&exit_status
 		);
 		if (!buildtin_excecuted)
 			executor(
 				(char **)tokens,
 				env,
 				call_to_execute,
-				&count_prompt
+				&count_prompt,
+				&exit_status
 			);
 	} while (true);
 

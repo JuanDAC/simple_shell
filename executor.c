@@ -49,7 +49,8 @@ void executor(
 	char **tokens,
 	char **env,
 	char *call_to_execute,
-	unsigned int *count_prompt
+	unsigned int *count_prompt,
+	int *exit_status
 )
 {
 	char command[BUFFER_SIZE] = "";
@@ -62,7 +63,7 @@ void executor(
 	if (!*command)
 		copy_in_buffer(command, tokens[0], char);
 
-	command_execute(command, tokens, env, call_to_execute, count_prompt);
+	command_execute(command, tokens, env, call_to_execute, count_prompt, exit_status);
 }
 
 
