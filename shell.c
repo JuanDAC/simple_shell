@@ -1,5 +1,5 @@
 #include "shell.h"
-
+#include <stdlib.h>
 /**
 * sigint_handler - sigint handler signal of Ctrl+C
 * @number: string within number
@@ -61,6 +61,7 @@ bool buildtin(
 	unsigned int *count_prompt
 )
 {
+	int status = 0;
 
 	(void)env;
 	(void)call_to_execute;
@@ -72,7 +73,7 @@ bool buildtin(
 		/* status_number = _atoi(tokens[1] ? tokens[1] : "0"); */
 		free(current_line);
 		/* exit(status_number < 0 ? 2 : status_number); */
-		exit(0);
+		exit(status);
 		return (true);
 	}
 	return (false);
