@@ -133,9 +133,9 @@ void command_execute(
 		if (execve(command_source, tokens, env) == EOF)
 		{
 			error_handler(command_source, *tokens, call_to_execute, count_prompt);
-			exit(DEADED_CHILD);
+			exit(EXIT_SUCCESS);
 		}
-		exit(DEADED_CHILD);
+		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
 	{
