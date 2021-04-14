@@ -139,7 +139,7 @@ void command_execute(
 		if (execve(command_source, tokens, env) == EOF)
 		{
 			error_handler(command_source, *tokens, call_to_execute, count_prompt, exit_status);
-			exit(DEADED_CHILD);
+			exit(*exit_status);
 		}
 		exit(DEADED_CHILD);
 	}

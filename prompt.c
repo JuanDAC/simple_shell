@@ -13,7 +13,8 @@ void prompt(
 	size_t *length_line,
 	/* arrive as a reference */
 	unsigned int *count_prompt,
-	bool print_prompt)
+	bool print_prompt,
+	int *exit_status)
 {
 	ssize_t length_characters = 0;
 
@@ -28,7 +29,7 @@ void prompt(
 		free(*current_line);
 		if (print_prompt)
 			NEW_LINE;
-		exit(EXIT_SUCCESS);
+		exit(*exit_status);
 	}
 	/*delete '\n' in last character to replace with a '\0' */
 	(*current_line)[length_characters - 1] = '\0';

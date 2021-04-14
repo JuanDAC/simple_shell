@@ -112,7 +112,8 @@ int main(
 			&current_line,
 			&length_current_line,
 			&count_prompt,
-			isatty(STDIN_FILENO)
+			isatty(STDIN_FILENO),
+			&exit_status
 		);
 		parser(
 			current_line,

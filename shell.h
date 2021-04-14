@@ -36,7 +36,7 @@ typedef unsigned char bool;
 #define true (1)
 #define false (0)
 
-void prompt(char **, size_t *, unsigned int *, bool);
+void prompt(char **, size_t *, unsigned int *, bool, int *);
 int length_string(char *);
 void buffer_concat(char **, char *, char *);
 bool includes_string(char *, char *, const bool, ...);
