@@ -143,9 +143,10 @@ void command_execute(
 		}
 		exit(DEADED_CHILD);
 	}
-	else if (pid > 0)
+	else if (pid > 0) /* i'm father */
 	{
 		wait(&status);
+		*exit_status = status % 255;
 	}
 	else if (pid == EOF)
 	{
