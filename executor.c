@@ -1,5 +1,6 @@
 #include "shell.h"
 
+
 /**
 * which - save the sourse teh command in variable @command
 * @tokens: tokens the input user
@@ -19,13 +20,17 @@ void which(char **tokens, char **env, char *command)
 	fill_buffer_null(command);
 	/* search the $PATH and get directions from value*/
 
-	for (i = 0; env[i]; i++)
-		if (includes_string(env[i], "PATH", false))
+	for (i = 0; env[i] != NULL; i++)
+		if (includes_string(env[i], "PATH=", false))
 		{
 			j = 0;
 			do {
 				/* concat the command with source directory */
 				path_content = string_token_index(&command, env[i], 5, ":", j);
+				if (!path_content)
+				{
+					continue;
+				}
 				buffer_concat(&command, "/", tokens[0]);
 				/* stop when the true command saved in variable @command */
 				if (access(command, F_OK) == 0)
