@@ -28,9 +28,7 @@ void which(char **tokens, char **env, char *command)
 				/* concat the command with source directory */
 				path_content = string_token_index(&command, env[i], 5, ":", j);
 				if (!path_content)
-				{
 					continue;
-				}
 				buffer_concat(&command, "/", tokens[0]);
 				/* stop when the true command saved in variable @command */
 				if (access(command, F_OK) == 0)
