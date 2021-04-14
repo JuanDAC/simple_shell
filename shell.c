@@ -70,9 +70,11 @@ bool buildtin(
 	if  (equal_strings(*tokens, "exit"))
 	{
 		/* refactorizar en una funcion */
-		status_number = _atoi(tokens[1] ? tokens[1] : "0");
+		/* status_number = _atoi(tokens[1] ? tokens[1] : "0"); */
+		status_number = 0;
 		free(current_line);
-		exit(status_number < 0 ? 2 : status_number);
+		/* exit(status_number < 0 ? 2 : status_number); */
+		exit(status_number);
 		return (true);
 	}
 	return (false);
