@@ -70,9 +70,14 @@ bool buildtin(
 	if (includes_string(*tokens, "exit", false))
 	{
 		/* refactorizar en una funcion */
-		status_number = _atoi(tokens[1] ? tokens[1] : "98");
+		if (!tokens[1])
+		{
+			free(current_line);
+			exit();
+			return (true);
+		}
+		status_number = _atoi(tokens[1]);
 		free(current_line);
-
 		exit(status_number < 0 ? 2 : status_number);
 		return (true);
 	}
