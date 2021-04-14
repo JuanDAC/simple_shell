@@ -24,6 +24,7 @@ void prompt(
 	length_characters = getline(current_line, length_line, stdin);
 	if (length_characters == EOF)
 	{
+
 		free(*current_line);
 		if (print_prompt)
 			NEW_LINE;

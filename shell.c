@@ -2,6 +2,7 @@
 
 /**
 * sigint_handler - sigint handler signal of Ctrl+C
+* @number: string within number
 * Return: void if success
 */
 void sigint_handler(int number __attribute__((unused)))
@@ -64,7 +65,7 @@ bool buildtin(
 	(void)call_to_execute;
 	(void)count_prompt;
 	int status_number;
-	
+
 
 	if (includes_string(*tokens, "exit", false))
 	{
@@ -73,7 +74,7 @@ bool buildtin(
 		free(current_line);
 
 		exit(status_number < 0 ? 2 : status_number);
-		return(true);
+		return (true);
 	}
 	return (false);
 }

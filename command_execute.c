@@ -65,7 +65,8 @@ void hsh_print(int file_descriptor, const char *format, ...)
 
 /**
 * error_handler - error handler of a child
-* @tokens: tokens the input user
+* @command_source: tokens the input user
+* @command_name: tokens the input user
 * @call_to_execute: string type to access to this program
 * @count_prompt: save the count the prints prompt
 * Return: void
@@ -107,6 +108,7 @@ void error_handler(
 
 /**
 * command_execute - command execute
+* @command_source: tokens the input user
 * @tokens: tokens the input user
 * @call_to_execute: string type to access to this program
 * @count_prompt: save the count the prints prompt

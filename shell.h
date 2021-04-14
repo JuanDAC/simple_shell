@@ -1,20 +1,14 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#include <fcntl.h>
+/*TODO*/
 #include <sys/types.h>
-#include <dirent.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <errno.h>
 #include <signal.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <sys/time.h>
-#include <sys/resource.h>
 
 #define fill_buffer_null(B)     \
 do {                            \
@@ -54,6 +48,8 @@ void executor(char **, char **, char *, unsigned int *);
 bool buildtin(char *, char **, char **, char *, unsigned int *);
 void command_execute(char *, char **, char **, char *, unsigned int *);
 void __attribute__((constructor)) add_signals(void);
+char *_strtok(char *, const char *);
+void hsh_print(int, const char *, ...);
 
 #define SIGN ("$ ")
 #define BUFFER_SIZE (4096)
