@@ -32,8 +32,7 @@ bool is_number(char *string)
 {
 	if (*string == '\0')
 		return (true);
-	return (((*string >= '0' && *string <= '9') || *string == '-') 
-			&& is_number(string + 1));
+	return ((*string >= '0' && *string <= '9') && is_number(string + 1));
 }
 
 
