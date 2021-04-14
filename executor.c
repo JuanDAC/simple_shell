@@ -13,7 +13,12 @@ void which(char **tokens, char **env, char *command)
 	int i, j;
 	char *path_content;
 
-	buffer_concat(&command, tokens[0], "");
+	
+	if  (equal_strings(*tokens, "env"))
+		buffer_concat(&command, "/usr/bin/", tokens[0]);
+	else
+		buffer_concat(&command, tokens[0], "");
+
 	if (access(command, X_OK) == 0)
 		return;
 
