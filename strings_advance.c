@@ -23,9 +23,18 @@ bool equal_strings(
 	return (equal_strings(string + 1, search_string + 1));
 }
 
-
-
-
+/**
+*is_number - check number
+*@string: string to check
+*Return: true in case its a number else false
+*/
+bool is_number(char *string)
+{
+	if (*string == '\0')
+		return (true);
+	return (((*string >= '0' && *string <= '9') || *string == '-') 
+			&& is_number(string + 1));
+}
 
 
 

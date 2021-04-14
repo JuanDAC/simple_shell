@@ -50,7 +50,7 @@ void __attribute__((constructor)) add_signals(void);
 char *_strtok(char *, const char *);
 void hsh_print(int, const char *, ...);
 bool equal_strings(char *, char *);
-
+bool is_number(char *string);
 #define SIGN ("$ ")
 #define BUFFER_SIZE (4096)
 #define PERROR perror("Error")
