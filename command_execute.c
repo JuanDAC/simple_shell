@@ -132,6 +132,15 @@ void command_execute(
 	pid_t pid;
 	int status;
 
+	if (access(command_source, F_OK) == -1)
+	{
+		hsh_print(STDERR_FILENO, "%s: %d: %s: not found\n",
+			call_to_execute, *count_prompt, *tokens
+		);
+		*exit_status = 127;
+		return;
+	}
+
 	pid = fork();
 
 	if (pid == 0)
