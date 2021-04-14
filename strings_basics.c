@@ -110,21 +110,28 @@ char *string_token_index(
 * @command: string to get length
 * Return: true or false as appropriate
 */
-void buffer_concat(char **buffer, char *slash, char *command)
+void buffer_concat(char *buffer, const int count, ...)
 {
 	int i, j;
+	char *to_copy;
+	va_list argumets;
 
-	if (!buffer || !slash || !command)
+	va_start(argumets, count);
+
+	if (!buffer)
 		return;
-	i = length_string(*buffer);
-	/* remplzamos el nulo por el string slash EJ "/bin/" */
-	for (j = 0; slash[j]; j++, i++)
-		(*buffer)[i] = slash[j];
-	/* concatenamos el commando que nos llegue EJ "/bin/ls"*/
-	for (j = 0; command[j]; j++, i++)
-		(*buffer)[i] = command[j];
-	/*agregamos el nulo de caracter al final*/
-	(*buffer)[i] = '\0';
+
+	i = length_string(buffer);
+
+	while (count--)
+	{
+		to_copy = va_arg(argumets, char *);
+		for (j = 0; to_copy[j]; j++, i++)
+			buffer[i] = to_copy[j];
+	}
+	buffer[i] = '\0';
+
+	va_end(argumets);
 }
 
 /**

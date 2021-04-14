@@ -70,11 +70,9 @@ bool buildtin(
 	if  (equal_strings(*tokens, "exit"))
 	{
 		/* refactorizar en una funcion */
-		/* status_number = _atoi(tokens[1] ? tokens[1] : "0"); */
-		status_number = 0;
+		status_number = _atoi(tokens[1] ? tokens[1] : "0");
 		free(current_line);
-		/* exit(status_number < 0 ? 2 : status_number); */
-		exit(EXIT_SUCCESS);
+		exit(status_number < 0 ? 2 : status_number);
 		return (true);
 	}
 	return (false);
@@ -94,6 +92,8 @@ int main(
 )
 {
 	char *tokens[BUFFER_SIZE];
+	char expand_tokens[BUFFER_SIZE];
+	int index_expand_tokens = 0;
 	char *current_line = NULL;
 	size_t length_current_line = 0;
 	unsigned int count_prompt = 0;
@@ -109,7 +109,10 @@ int main(
 		);
 		parser(
 			current_line,
-			(char **)tokens
+			(char **)tokens,
+			env,
+			&index_expand_tokens,
+			expand_tokens
 		);
 		buildtin_excecuted = buildtin(
 			current_line,

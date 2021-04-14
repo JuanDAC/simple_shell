@@ -38,10 +38,10 @@ typedef unsigned char bool;
 
 void prompt(char **, size_t *, unsigned int *, bool);
 int length_string(char *);
-void buffer_concat(char **, char *, char *);
+void buffer_concat(char *, int, ...);
 bool includes_string(char *, char *, const bool, ...);
 char *string_token_index(char **, char *, int, const char *, int);
-void parser(char *, char **);
+void parser(char *, char **, char **, int *, char *);
 unsigned int unsigned_int_to_buffer(int, char *, int);
 void executor(char **, char **, char *, unsigned int *);
 bool buildtin(char *, char **, char **, char *, unsigned int *);
