@@ -38,6 +38,8 @@ wait3 (man 2 wait3)
 wait4 (man 2 wait4)
 write (man 2 write)
 
+![imagename](https://raw.githubusercontent.com/JuanDAC/simple_shell/main/image.png)
+
 GCC command to compile:
 ```sh
 $| gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
