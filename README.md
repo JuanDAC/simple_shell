@@ -52,28 +52,34 @@ Simple shell made in C to interact with a linux operating system. Has an entry p
 
 ## Test Output
 
-####It works both
+#### It works both
 
 Interactive mode:
 ```sh
 $| ./hsh
 $ ls
-UTHORS             parser.c   strings_advance.c
-command_execute.c   prompt.c   strings_basics.c
-executor.c          README.md  _strtok.c
-makefile            shell.c
-man_1_simple_shell  shell.h
+AUTHORS            makefile            prompt.c   shell.h            _strtok.c
+command_execute.c  man_1_simple_shell  README.md  strings_advance.c
+executor.c         parser.c            shell.c    strings_basics.c
 $ exit
-$| ./hsh
+$|
 ```
 
+#### Non-interactive mode:
+
 ```sh
-$| exit
+$| echo "ls" | ./hsh
+AUTHORS            makefile            prompt.c   shell.h            _strtok.c
+command_execute.c  man_1_simple_shell  README.md  strings_advance.c
+executor.c         parser.c            shell.c    strings_basics.c
+$|
 ```
+
+#### To exit program in interactive mode:
 
 The output of this program when executed it look like:
 ```sh
-$|
+$ exit
 ```
 
 ## Example
