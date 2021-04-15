@@ -6,6 +6,7 @@
 * @length_line: length of line alloc
 * @count_prompt: save the count the prints prompt
 * @print_prompt: true if is a tty else false
+* @exit_status: variable to save exit status
 * Return: void
 */
 void prompt(
@@ -14,7 +15,8 @@ void prompt(
 	/* arrive as a reference */
 	unsigned int *count_prompt,
 	bool print_prompt,
-	int *exit_status)
+	int *exit_status
+)
 {
 	ssize_t length_characters = 0;
 

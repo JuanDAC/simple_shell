@@ -13,8 +13,7 @@ void which(char **tokens, char **env, char *command)
 	int i, j;
 	char *path_content;
 
-	
-	if  (equal_strings(*tokens, "env"))
+	if (equal_strings(*tokens, "env"))
 		buffer_concat(&command, "/usr/bin/", tokens[0]);
 	else
 		buffer_concat(&command, tokens[0], "");
@@ -51,6 +50,7 @@ void which(char **tokens, char **env, char *command)
 * @call_to_execute: string type to access to this program
 * @count_prompt: save the count the prints prompt
 * @env: environment
+* @exit_status: variable to save exit status
 * Return: void
 */
 void executor(
@@ -71,7 +71,14 @@ void executor(
 	if (!*command)
 		copy_in_buffer(command, tokens[0], char);
 
-	command_execute(command, tokens, env, call_to_execute, count_prompt, exit_status);
+	command_execute(
+		command,
+		tokens,
+		env,
+		call_to_execute,
+		count_prompt,
+		exit_status
+	);
 }
 
 

@@ -69,6 +69,7 @@ void hsh_print(int file_descriptor, const char *format, ...)
 * @command_name: tokens the input user
 * @call_to_execute: string type to access to this program
 * @count_prompt: save the count the prints prompt
+* @exit_status: variable to save exit status
 * Return: void
 */
 bool error_handler(
@@ -123,6 +124,7 @@ bool error_handler(
 * @call_to_execute: string type to access to this program
 * @count_prompt: save the count the prints prompt
 * @env: environment
+* @exit_status: variable to save exit status
 * Return: void
 */
 void command_execute(
@@ -137,7 +139,13 @@ void command_execute(
 	pid_t pid;
 	int status;
 
-	if (error_handler(command_source, *tokens, call_to_execute, count_prompt, exit_status))
+	if (error_handler(
+		command_source,
+		*tokens,
+		call_to_execute,
+		count_prompt,
+		exit_status
+	))
 		return;
 
 	pid = fork();
@@ -145,11 +153,14 @@ void command_execute(
 	if (pid == 0)
 	{
 		if (execve(command_source, tokens, env) == EOF)
-		{
-			error_handler(command_source, *tokens, call_to_execute, count_prompt, exit_status);
-			exit(*exit_status);
-		}
-		exit(DEADED_CHILD);
+			error_handler(
+				command_source,
+				*tokens,
+				call_to_execute,
+				count_prompt,
+				exit_status
+			);
+		exit(*exit_status);
 	}
 	else if (pid > 0) /* i'm father */
 	{
@@ -157,9 +168,13 @@ void command_execute(
 		*exit_status = status % 255;
 	}
 	else if (pid == EOF)
-	{
-		error_handler(command_source, *tokens, call_to_execute, count_prompt, exit_status);
-	}
+		error_handler(
+			command_source,
+			*tokens,
+			call_to_execute,
+			count_prompt,
+			exit_status
+		);
 }
 
 

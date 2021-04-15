@@ -51,6 +51,7 @@ int _atoi(char *string_number)
 * @call_to_execute: string type to access to this program
 * @count_prompt: save the count the prints prompt
 * @env: environment
+* @exit_status: variable to save exit status
 * Return: void
 */
 bool buildtin(
@@ -69,8 +70,8 @@ bool buildtin(
 	if  (equal_strings(*tokens, "exit"))
 	{
 		/*refactorizar en una funcion */
-		if ( !tokens[1] || is_number(tokens[1]))
-		{	
+		if (!tokens[1] || is_number(tokens[1]))
+		{
 			*exit_status = (tokens[1] ? _atoi(tokens[1]) : *exit_status);
 			free(current_line);
 			exit(*exit_status < 0 ? 2 : *exit_status);
@@ -80,7 +81,7 @@ bool buildtin(
 			hsh_print(STDERR_FILENO, "%s: %d: exit: Illegal number: %s\n",
 			call_to_execute, *count_prompt, tokens[1]);
 			*exit_status = 2;
-		}	
+		}
 		return (true);
 	}
 	return (false);
