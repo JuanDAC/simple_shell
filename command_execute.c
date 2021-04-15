@@ -71,7 +71,7 @@ void hsh_print(int file_descriptor, const char *format, ...)
 * @count_prompt: save the count the prints prompt
 * Return: void
 */
-void error_handler(
+bool error_handler(
 	char *command_source,
 	char *command_name,
 	char *call_to_execute,
@@ -86,6 +86,7 @@ void error_handler(
 			call_to_execute, *count_prompt, command_name
 		);
 		*exit_status = 126;
+		return (true);
 	}
 	else if (access(command_source, F_OK) == 0
 		&& access(command_source, R_OK) == -1)
@@ -94,6 +95,7 @@ void error_handler(
 			call_to_execute, command_source
 		);
 		*exit_status = 2;
+		return (true);
 	}
 	else if (length_string(command_name) >= 256)
 	{
@@ -101,14 +103,17 @@ void error_handler(
 			call_to_execute, *count_prompt, command_name
 		);
 		*exit_status = 2;
+		return (true);
 	}
-	else
+	else if (access(command_source, F_OK) == -1)
 	{
 		hsh_print(STDERR_FILENO, "%s: %d: %s: not found\n",
 			call_to_execute, *count_prompt, command_name
 		);
 		*exit_status = 127;
+		return (true);
 	}
+	return (false);
 }
 
 /**
@@ -132,14 +137,8 @@ void command_execute(
 	pid_t pid;
 	int status;
 
-	if (access(command_source, F_OK) == -1)
-	{
-		hsh_print(STDERR_FILENO, "%s: %d: %s: not found\n",
-			call_to_execute, *count_prompt, *tokens
-		);
-		*exit_status = 127;
+	if (error_handler(command_source, *tokens, call_to_execute, count_prompt, exit_status))
 		return;
-	}
 
 	pid = fork();
 
