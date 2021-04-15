@@ -1,0 +1,74 @@
+.Dd 15/4/21               \" DATE
+.Dt HSH "1"   \" Program name and manual section number
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify
+.Nm hsh |
+.N.
+.\" Use .Nm macro to designate other names for the documented program.
+simple shell - command line interpreter
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm ./hsh
+.Op no options \"[./]
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+This program is an interpreter of commands, simple shell made in C to interact with a linux operating system.
+Has an entry point who comutes arguments to the C program 
+in the PATH enviroment. It reads the command line from the standard input, this shell allocs
+the tokens given by the user, it saves the print prompt in the environment variables
+.Ar simple shell.
+.Pp
+.Pp                      \" Inserts a space
+.Bl
+.Pp
+The standard C functions and system calls employed for this simple_shell are:
+.Bl
+.Nm exit(), fork(), free(), signal(), access(), wait(), write(), getline();
+.Pp
+.El                      \" Ends the list
+
+.El                      \" Ends the list
+.Pp
+.Sh EXECUTE      \" May not be needed
+To run this program, you have to compile it using
+.Bl
+.Pp
+.Nm GNU Compiler Collection Version 4.8 
+and the following flags:
+.Bl
+gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+
+.Sh Built-ins
+.It 
+       There are one included built-in functions with this shell:
+.Bl
+
+.It 
+.Nm    exit
+
+.Bl           
+      This  function  exits  the shell and returns the code of the
+      last execution, if no argument is provided or with the  number provided after the call of exit
+.Bl
+.Pp
+.Nm exit (status);
+
+.Sh Printing
+.Bl
+    Input:
+.Bl
+    [$ | ls -l]
+.Sh
+.Pp  
+    Output:
+.Pp
+    drwxrwxr-x 4 user user  4096 abr 14 18:20 ..
+.Pp 
+    drwxrwxr-x 4 user user  4096 abr 14 18:20 .
+.Pp 
+    drwxrwxr-x 4 user user  4096 abr 14 18:20 0-prueba
+.Pp 
+    drwxrwxr-x 4 user user  4096 abr 14 18:20 executor.c
+
+.Sh AUTHORS
+Paola Carrero,
+Juan David Avila,
+Nicolas Gonzalez
