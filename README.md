@@ -52,7 +52,18 @@ Simple shell made in C to interact with a linux operating system. Has an entry p
 
 ## Test Output
 
+####It works both
+
+Interactive mode:
 ```sh
+$| ./hsh
+$ ls
+UTHORS             parser.c   strings_advance.c
+command_execute.c   prompt.c   strings_basics.c
+executor.c          README.md  _strtok.c
+makefile            shell.c
+man_1_simple_shell  shell.h
+$ exit
 $| ./hsh
 ```
 
