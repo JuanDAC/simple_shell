@@ -60,7 +60,7 @@ bool buildtin(data_t *data)
 			data->exit_status = data->tokens[1]
 				? _atoi(data->tokens[1])
 				: data->exit_status;
-			free(data->current_line);
+			/*free(data->current_line); */
 			exit(data->exit_status < 0 ? 2 : data->exit_status);
 		}
 		else
@@ -89,12 +89,21 @@ int main(
 {
 	char *tokens[BUFFER_SIZE];
 	char remake_tokens[BUFFER_SIZE];
+	char currnet_pid[SMALL_BUFFER_SIZE];
+	char line[BUFFER_SIZE];
+
+	fill_buffer_null(currnet_pid, SMALL_BUFFER_SIZE, char);
+	unsigned_int_to_buffer(getpid(), currnet_pid, 0);
+
 	data_t data = {NULL};
 
-	data.tokens = (char **)tokens, data.current_line = NULL, data.env = env;
+	data.tokens = (char **)tokens, data.current_line = line, data.env = env;
 	data.size_current_line = 0, data.current_characters_read = 0;
 	data.index_remake_tokens = 0, data.exit_status = 0, data.count_prompt = 0;
 	data.remake_tokens = remake_tokens, data.call_to_execute = arguments_value[0];
+	data.size_remake_tokens = BUFSIZ, data.currnet_pid = currnet_pid;
+	data.logic_operator = false;
+
 
 	do {
 		prompt(&data, isatty(STDIN_FILENO));

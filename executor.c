@@ -21,7 +21,7 @@ void which(char **tokens, char **env, char *command)
 	if (access(command, X_OK) == 0)
 		return;
 
-	fill_buffer_null(command);
+	fill_buffer_null(command, 1024, char);
 	/* search the $PATH and get directions from value*/
 
 	for (i = 0; env[i] != NULL; i++)
@@ -40,7 +40,7 @@ void which(char **tokens, char **env, char *command)
 				j += 1;
 			} while (path_content);
 		}
-	fill_buffer_null(command);
+	fill_buffer_null(command, 1024, char);
 }
 
 

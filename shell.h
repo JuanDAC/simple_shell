@@ -8,6 +8,17 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <signal.h>
+typedef unsigned char bool;
+
+#define true (1)
+#define false (0)
+
+
+#define none_t (0)
+#define separator_t (1)
+#define or_t (2)
+#define and_t (3)
+
 typedef struct _data
 {
 	char *current_line;
@@ -22,15 +33,19 @@ typedef struct _data
 	char *call_to_execute;
 
 	char *remake_tokens;
-	char *index_remake_tokens;
+	int index_remake_tokens;
+	int size_remake_tokens;
+	pid_t pid_last_child;
+	char *currnet_pid;
+	bool logic_operator;
 } data_t;
 
-#define fill_buffer_null(B)     \
-do {                            \
-	int _i = 1024;              \
-	char *_fill_buffer = (B);   \
-	while (_i--)                \
-		_fill_buffer[_i] = '\0';\
+#define fill_buffer_null(B, SIZE, T) \
+do {                                 \
+	int _i = SIZE;                   \
+	T *_fill_buffer = (B);           \
+	while (_i--)                     \
+		_fill_buffer[_i] = '\0';     \
 } while (0)
 
 #define copy_in_buffer(D, S, T)   \
@@ -42,15 +57,11 @@ do {                              \
 	*_destiny = '\0';             \
 } while (0)
 
+
 /* TODO */
 #define COMMAND_NOT_FOUND (127)
 #define COMMAND_NOT_EXECUTE (126)
 #define GENERICS_ERROR (2)
-
-typedef unsigned char bool;
-
-#define true (1)
-#define false (0)
 
 void prompt(data_t *, bool);
 int length_string(char *);
@@ -68,9 +79,11 @@ void hsh_print(int, const char *, ...);
 bool equal_strings(char *, char *);
 bool is_number(char *string);
 void _buffer_concat(char *, bool, int, ...);
+ssize_t _getline(data_t *data);
 
 #define SIGN ("$ ")
-#define BUFFER_SIZE (4096)
+#define BUFFER_SIZE (BUFSIZ)
+#define SMALL_BUFFER_SIZE (1024)
 #define PERROR perror("Error")
 #define DEADED_CHILD (256)
 #define PRINT_PRONPT write(1, SIGN, 2)

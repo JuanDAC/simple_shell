@@ -1,6 +1,6 @@
 
 build:
-	@gcc -rdynamic -pg -finstrument-functions -g -Wall -Werror -Wextra -pedantic *.c -o hsh
+	@gcc -g -Wall -Werror -Wextra -pedantic *.c -o hsh
 	@echo "Buliding..."
 
 run:
@@ -15,7 +15,7 @@ valgrind-q:
 
 valgrind:
 	@gcc -rdynamic -pg -finstrument-functions -g -Wall -Werror -Wextra -pedantic *.c -o hsh
-	@valgrind --leak-check=full --track-origins=yes ./hsh ; rm -f hsh
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./hsh ; rm -f hsh
 
 gdb:
 	@gcc -rdynamic -pg -finstrument-functions -g -Wall -Werror -Wextra -pedantic *.c -o hsh

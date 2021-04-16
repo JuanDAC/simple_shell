@@ -27,7 +27,7 @@ void hsh_print(int file_descriptor, const char *format, ...)
 						*buffer++ = *string++;
 					break;
 				case 'd':
-					fill_buffer_null(string_number);
+					fill_buffer_null(string_number, 1024, char);
 					number = va_arg(argumets, int);
 					unsigned_int_to_buffer(number, string_number, 0);
 					string = string_number;
