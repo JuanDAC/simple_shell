@@ -1,4 +1,8 @@
 
+build-c90:
+	@gcc -g -Wall -Werror -Wextra -pedantic --std=c90 *.c -o hsh
+	@echo "Buliding c90..."
+
 build:
 	@gcc -g -Wall -Werror -Wextra -pedantic *.c -o hsh
 	@echo "Buliding..."

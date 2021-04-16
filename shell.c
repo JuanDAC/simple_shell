@@ -91,11 +91,11 @@ int main(
 	char remake_tokens[BUFFER_SIZE];
 	char currnet_pid[SMALL_BUFFER_SIZE];
 	char line[BUFFER_SIZE];
+	data_t data = {NULL};
 
 	fill_buffer_null(currnet_pid, SMALL_BUFFER_SIZE, char);
 	unsigned_int_to_buffer(getpid(), currnet_pid, 0);
 
-	data_t data = {NULL};
 
 	data.tokens = (char **)tokens, data.current_line = line, data.env = env;
 	data.size_current_line = 0, data.current_characters_read = 0;
