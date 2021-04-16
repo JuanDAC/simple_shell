@@ -18,7 +18,23 @@ typedef unsigned char bool;
 #define separator_t (1)
 #define or_t (2)
 #define and_t (3)
-
+/**
+ * struct _data - struct
+ * @current_line: current_line
+ * @size_current_line: size_current_line
+ * @current_characters_read: current_characters_read
+ * @exit_status: exit_status
+ * @count_prompt: count_prompt
+ * @tokens: tokens
+ * @env: env
+ * @call_to_execute: call_to_execute
+ * @remake_tokens: remake_tokens
+ * @index_remake_tokens: index_remake_tokens
+ * @size_remake_tokens: size_remake_tokens
+ * @pid_last_child: pid_last_child
+ * @currnet_pid: currnet_pid
+ * @logic_operator: logic_operator
+ */
 typedef struct _data
 {
 	char *current_line;
@@ -65,7 +81,6 @@ do {                              \
 
 void prompt(data_t *, bool);
 int length_string(char *);
-//void buffer_concat(char **, char *, char *);
 bool includes_string(char *, char *, const bool, ...);
 char *string_token_index(char **, char *, int, const char *, int);
 void parser(data_t *);

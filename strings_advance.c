@@ -36,7 +36,7 @@ bool is_number(char *string)
 }
 
 /**
-* buffer_concat - determines whether @string includes a search_string
+* _buffer_concat - determines whether @string includes a search_string
 * @buffer: string to get length
 * @in_last: string to get length
 * @count: string to get length
@@ -52,7 +52,6 @@ void _buffer_concat(char *buffer, bool in_last, int count, ...)
 		return;
 
 	va_start(argumets, count);
-
 	i = (in_last) ? length_string(buffer) : 0;
 
 	while (count--)
@@ -63,7 +62,6 @@ void _buffer_concat(char *buffer, bool in_last, int count, ...)
 	}
 
 	buffer[i] = '\0';
-
 	va_end(argumets);
 }
 
