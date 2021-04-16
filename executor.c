@@ -14,9 +14,9 @@ void which(char **tokens, char **env, char *command)
 	char *path_content;
 
 	if (equal_strings(*tokens, "env"))
-		buffer_concat(&command, "/usr/bin/", tokens[0]);
+		_buffer_concat(command, false, 2, "/usr/bin/", tokens[0]);
 	else
-		buffer_concat(&command, tokens[0], "");
+		_buffer_concat(command, false, 1, tokens[0]);
 
 	if (access(command, X_OK) == 0)
 		return;
@@ -33,7 +33,7 @@ void which(char **tokens, char **env, char *command)
 				path_content = string_token_index(&command, env[i], 5, ":", j);
 				if (!path_content)
 					continue;
-				buffer_concat(&command, "/", tokens[0]);
+				_buffer_concat(command, true, 2, "/", tokens[0]);
 				/* stop when the true command saved in variable @command */
 				if (access(command, F_OK) == 0)
 					return;
@@ -46,41 +46,21 @@ void which(char **tokens, char **env, char *command)
 
 /**
 * executor - call to logic for to search source and command execute
-* @tokens: tokens the input user
-* @call_to_execute: string type to access to this program
-* @count_prompt: save the count the prints prompt
-* @env: environment
-* @exit_status: variable to save exit status
+* @data: tokens the input user
 * Return: void
 */
-void executor(
-	char **tokens,
-	char **env,
-	char *call_to_execute,
-	unsigned int *count_prompt,
-	int *exit_status
-)
+void executor(data_t *data)
 {
 	char command[BUFFER_SIZE] = "";
 
-	if (!*tokens)
+	if (!data->tokens[0])
 		return;
-	which(tokens, env, command);
+	which(data->tokens, data->env, command);
 
 	/* guardamos la direccion del comando en la primera picicion de tokens */
 	if (!*command)
-		copy_in_buffer(command, tokens[0], char);
+		copy_in_buffer(command, data->tokens[0], char);
 
-	command_execute(
-		command,
-		tokens,
-		env,
-		call_to_execute,
-		count_prompt,
-		exit_status
-	);
+	command_execute(data, command);
 }
-
-
-
 

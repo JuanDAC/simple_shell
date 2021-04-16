@@ -2,15 +2,15 @@
 #include <string.h>
 /**
 * parser - split the lines with delimiter of spaces
-* @line: line to read from _getline
-* @tokens: tokens the input user
+* @data: tokens the input user
 * Return: void
 */
-void parser(char *line, char **tokens)
+void parser(data_t *data)
 {
 	int i = 0;
 
 	do {
-		tokens[i] = strtok(i ? NULL : line, " ");
-	} while (tokens[i++]);
+		data->tokens[i] = strtok(i ? NULL : data->current_line, " ");
+		/*if (count_includes_characters(, )) */
+	} while (data->tokens[i++]);
 }

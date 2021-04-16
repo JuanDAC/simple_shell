@@ -11,7 +11,7 @@ simple shell - command line interpreter
 .Op no options \"[./]
 .Sh DESCRIPTION          \" Section Header - required - don't modify
 This program is an interpreter of commands, simple shell made in C to interact with a linux operating system.
-Has an entry point who comutes arguments to the C program 
+Has an entry point who comutes arguments to the C program
 in the PATH enviroment. It reads the command line from the standard input, this shell allocs
 the tokens given by the user, it saves the print prompt in the environment variables
 .Ar simple shell.
@@ -31,20 +31,20 @@ The standard C functions and system calls employed for this simple_shell are:
 To run this program, you have to compile it using
 .Bl
 .Pp
-.Nm GNU Compiler Collection Version 4.8 
+.Nm GNU Compiler Collection Version 4.8
 and the following flags:
 .Bl
 gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 
 .Sh Built-ins
-.It 
+.It
        There are one included built-in functions with this shell:
 .Bl
 
-.It 
+.It
 .Nm    exit
 
-.Bl           
+.Bl
       This  function  exits  the shell and returns the code of the
       last execution, if no argument is provided or with the  number provided after the call of exit
 .Bl
@@ -57,15 +57,15 @@ gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 .Bl
     [$ | ls -l]
 .Sh
-.Pp  
+.Pp
     Output:
 .Pp
     drwxrwxr-x 4 user user  4096 abr 14 18:20 ..
-.Pp 
+.Pp
     drwxrwxr-x 4 user user  4096 abr 14 18:20 .
-.Pp 
+.Pp
     drwxrwxr-x 4 user user  4096 abr 14 18:20 0-prueba
-.Pp 
+.P
     drwxrwxr-x 4 user user  4096 abr 14 18:20 executor.c
 
 .Sh AUTHORS

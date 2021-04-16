@@ -46,41 +46,28 @@ int _atoi(char *string_number)
 
 /**
 * buildtin - buildtin execute
-* @current_line: current line alloc
-* @tokens: tokens the input user
-* @call_to_execute: string type to access to this program
-* @count_prompt: save the count the prints prompt
-* @env: environment
-* @exit_status: variable to save exit status
+* @data: current line alloc
 * Return: void
 */
-bool buildtin(
-	char *current_line,
-	char **tokens,
-	char **env,
-	char *call_to_execute,
-	unsigned int *count_prompt,
-	int *exit_status
-)
+bool buildtin(data_t *data)
 {
-	(void)env;
-	(void)call_to_execute;
-	(void)count_prompt;
 
-	if  (equal_strings(*tokens, "exit"))
+	if  (equal_strings(data->tokens[0], "exit"))
 	{
 		/*refactorizar en una funcion */
-		if (!tokens[1] || is_number(tokens[1]))
+		if (!data->tokens[1] || is_number(data->tokens[1]))
 		{
-			*exit_status = (tokens[1] ? _atoi(tokens[1]) : *exit_status);
-			free(current_line);
-			exit(*exit_status < 0 ? 2 : *exit_status);
+			data->exit_status = data->tokens[1]
+				? _atoi(data->tokens[1])
+				: data->exit_status;
+			free(data->current_line);
+			exit(data->exit_status < 0 ? 2 : data->exit_status);
 		}
 		else
 		{
 			hsh_print(STDERR_FILENO, "%s: %d: exit: Illegal number: %s\n",
-			call_to_execute, *count_prompt, tokens[1]);
-			*exit_status = 2;
+				data->call_to_execute, data->count_prompt, data->tokens[1]);
+			data->exit_status = 2;
 		}
 		return (true);
 	}
@@ -101,41 +88,19 @@ int main(
 )
 {
 	char *tokens[BUFFER_SIZE];
-	char *current_line = NULL;
-	size_t length_current_line = 0;
-	unsigned int count_prompt = 0;
-	char *call_to_execute = arguments_value[0];
-	bool buildtin_excecuted;
-	int exit_status = 0;
+	char remake_tokens[BUFFER_SIZE];
+	data_t data = {NULL};
+
+	data.tokens = (char **)tokens, data.current_line = NULL, data.env = env;
+	data.size_current_line = 0, data.current_characters_read = 0;
+	data.index_remake_tokens = 0, data.exit_status = 0, data.count_prompt = 0;
+	data.remake_tokens = remake_tokens, data.call_to_execute = arguments_value[0];
 
 	do {
-		prompt(
-			&current_line,
-			&length_current_line,
-			&count_prompt,
-			isatty(STDIN_FILENO),
-			&exit_status
-		);
-		parser(
-			current_line,
-			(char **)tokens
-		);
-		buildtin_excecuted = buildtin(
-			current_line,
-			(char **)tokens,
-			env,
-			call_to_execute,
-			&count_prompt,
-			&exit_status
-		);
-		if (!buildtin_excecuted)
-			executor(
-				(char **)tokens,
-				env,
-				call_to_execute,
-				&count_prompt,
-				&exit_status
-			);
+		prompt(&data, isatty(STDIN_FILENO));
+		parser(&data);
+		if (!buildtin(&data))
+			executor(&data);
 	} while (true);
 
 	return (EXIT_SUCCESS);

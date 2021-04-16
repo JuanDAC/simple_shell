@@ -35,5 +35,35 @@ bool is_number(char *string)
 	return ((*string >= '0' && *string <= '9') && is_number(string + 1));
 }
 
+/**
+* buffer_concat - determines whether @string includes a search_string
+* @buffer: string to get length
+* @in_last: string to get length
+* @count: string to get length
+* Return: true or false as appropriate
+*/
+void _buffer_concat(char *buffer, bool in_last, int count, ...)
+{
+	int i, j;
+	va_list argumets;
+	char *current_string;
 
+	if (!buffer)
+		return;
+
+	va_start(argumets, count);
+
+	i = (in_last) ? length_string(buffer) : 0;
+
+	while (count--)
+	{
+		current_string = va_arg(argumets, char *);
+		for (j = 0; current_string[j] != '\0'; i++, j++)
+			buffer[i] = current_string[j];
+	}
+
+	buffer[i] = '\0';
+
+	va_end(argumets);
+}
 

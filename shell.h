@@ -8,6 +8,22 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <signal.h>
+typedef struct _data
+{
+	char *current_line;
+	size_t size_current_line;
+	ssize_t current_characters_read;
+
+
+	int exit_status;
+	unsigned int count_prompt;
+	char **tokens;
+	char **env;
+	char *call_to_execute;
+
+	char *remake_tokens;
+	char *index_remake_tokens;
+} data_t;
 
 #define fill_buffer_null(B)     \
 do {                            \
@@ -36,21 +52,23 @@ typedef unsigned char bool;
 #define true (1)
 #define false (0)
 
-void prompt(char **, size_t *, unsigned int *, bool, int *);
+void prompt(data_t *, bool);
 int length_string(char *);
-void buffer_concat(char **, char *, char *);
+//void buffer_concat(char **, char *, char *);
 bool includes_string(char *, char *, const bool, ...);
 char *string_token_index(char **, char *, int, const char *, int);
-void parser(char *, char **);
+void parser(data_t *);
 unsigned int unsigned_int_to_buffer(int, char *, int);
-void executor(char **, char **, char *, unsigned int *, int *);
-bool buildtin(char *, char **, char **, char *, unsigned int *, int *);
-void command_execute(char *, char **, char **, char *, unsigned int *, int *);
+void executor(data_t *);
+bool buildtin(data_t *);
+void command_execute(data_t *, char *);
 void __attribute__((constructor)) add_signals(void);
 char *_strtok(char *, const char *);
 void hsh_print(int, const char *, ...);
 bool equal_strings(char *, char *);
 bool is_number(char *string);
+void _buffer_concat(char *, bool, int, ...);
+
 #define SIGN ("$ ")
 #define BUFFER_SIZE (4096)
 #define PERROR perror("Error")

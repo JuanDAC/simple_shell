@@ -2,38 +2,29 @@
 #include <stdio.h>
 /**
 * prompt - implements features of prompt
-* @current_line: current line alloc
-* @length_line: length of line alloc
-* @count_prompt: save the count the prints prompt
-* @print_prompt: true if is a tty else false
-* @exit_status: variable to save exit status
+* @data: current line alloc
+* @print_prompt: save the count the prints prompt
 * Return: void
 */
-void prompt(
-	char **current_line,
-	size_t *length_line,
-	/* arrive as a reference */
-	unsigned int *count_prompt,
-	bool print_prompt,
-	int *exit_status
-)
+void prompt(data_t *data, bool print_prompt)
 {
-	ssize_t length_characters = 0;
-
 	if (print_prompt)
 		PRINT_PRONPT;
 	/* add one in value */
-	*count_prompt += 1;
-	length_characters = getline(current_line, length_line, stdin);
-	if (length_characters == EOF)
+	data->count_prompt += 1;
+	data->current_characters_read = getline(
+		&data->current_line,
+		&data->size_current_line,
+		stdin
+	);
+	if (data->current_characters_read == EOF)
 	{
-
-		free(*current_line);
+		free(data->current_line);
 		if (print_prompt)
 			NEW_LINE;
-		exit(*exit_status);
+		exit(data->exit_status);
 	}
 	/*delete '\n' in last character to replace with a '\0' */
-	(*current_line)[length_characters - 1] = '\0';
+	data->current_line[data->current_characters_read - 1] = '\0';
 }
 

@@ -102,29 +102,21 @@ char *string_token_index(
 	);
 }
 
-
 /**
-* buffer_concat - determines whether @string includes a search_string
-* @buffer: string to get length
-* @slash: string to get length
-* @command: string to get length
-* Return: true or false as appropriate
+* count_includes_characters - count includes characters
+* @string: string to search
+* @character: character a buscar
+* Return: number of eachs character includes
 */
-void buffer_concat(char **buffer, char *slash, char *command)
+int count_includes_characters(char *string, char character)
 {
-	int i, j;
+	if (!string || !*string)
+		return (0);
 
-	if (!buffer || !slash || !command)
-		return;
-	i = length_string(*buffer);
-	/* remplzamos el nulo por el string slash EJ "/bin/" */
-	for (j = 0; slash[j]; j++, i++)
-		(*buffer)[i] = slash[j];
-	/* concatenamos el commando que nos llegue EJ "/bin/ls"*/
-	for (j = 0; command[j]; j++, i++)
-		(*buffer)[i] = command[j];
-	/*agregamos el nulo de caracter al final*/
-	(*buffer)[i] = '\0';
+	if (*string == character)
+		return (1 + count_includes_characters(string + 1, character));
+
+	return (count_includes_characters(string + 1, character));
 }
 
 /**
